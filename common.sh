@@ -36,7 +36,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --disable-nvenc
 --disable-videotoolbox
 --disable-audiotoolbox
---disable-vaapi
+--disable-vaapi \
 --enable-libopus
 --enable-libmp3lame
 --enable-filter=loudnorm
@@ -51,7 +51,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-filter=format
 --enable-filter=null
 --enable-filter=setpts
---enable-filter=trim
+--enable-filter=trim \
 --disable-protocols
 --enable-protocol=file
 --enable-protocol=pipe
@@ -70,7 +70,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-demuxer=mp3
 --enable-demuxer=mpc
 --enable-demuxer=mpc8
---enable-demuxer=ogg
+--enable-demuxer=ogg \
 --enable-demuxer=pcm_alaw
 --enable-demuxer=pcm_mulaw
 --enable-demuxer=pcm_f64be
@@ -98,7 +98,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-demuxer=wav
 --enable-demuxer=wv
 --enable-demuxer=xwma
---enable-demuxer=dsf
+--enable-demuxer=dsf \
 --enable-muxer=image2
 --enable-muxer=ac3
 --enable-muxer=aiff
@@ -135,7 +135,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-muxer=rm
 --enable-muxer=tta
 --enable-muxer=wav
---enable-muxer=wv
+--enable-muxer=wv \
 --enable-decoder=aac
 --enable-decoder=aac_latm
 --enable-decoder=ac3
@@ -160,7 +160,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-decoder=mp3on4float
 --enable-decoder=mpc7
 --enable-decoder=mpc8
---enable-decoder=libopus
+--enable-decoder=libopus \
 
 --enable-decoder=ra_144
 --enable-decoder=ra_288
@@ -184,7 +184,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-decoder=pcm_f64le
 --enable-decoder=pcm_lxf
 --enable-decoder=pcm_mulaw
---enable-decoder=pcm_s8
+--enable-decoder=pcm_s8 \
 --enable-decoder=pcm_s8_planar
 --enable-decoder=pcm_s16be
 --enable-decoder=pcm_s16be_planar
@@ -214,8 +214,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-encoder=eac3
 --enable-encoder=flac
 --enable-encoder=libmp3lame
---enable-encoder=libopus
-
+--enable-encoder=libopus \
 --enable-encoder=ra_144
 --enable-encoder=tta
 --enable-encoder=vorbis
@@ -243,7 +242,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-encoder=pcm_s32be
 --enable-encoder=pcm_s32le
 --enable-encoder=pcm_s32le_planar
---enable-encoder=pcm_u8
+--enable-encoder=pcm_u8 \
 --enable-encoder=pcm_u16be
 --enable-encoder=pcm_u16le
 --enable-encoder=pcm_u24be
@@ -260,6 +259,6 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-parser=mpegaudio
 --enable-parser=tak
 --enable-parser=vorbis
---enable-runtime-cpudetect
+--enable-runtime-cpudetect \
 
 )
