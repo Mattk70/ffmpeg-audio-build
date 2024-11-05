@@ -48,7 +48,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -y && \
-          sudo apt-get install -y yasm mingw-w64 lame libmp3lame-dev libopus-dev
+          sudo apt-get install -y yasm mingw-w64
       - name: Download and build libmp3lame for Windows
         run: |
           # Download LAME source code
@@ -67,7 +67,8 @@ jobs:
           sudo cp include/lame.h /usr/local/x86_64-w64-mingw32/include/
       - name: Verify libmp3lame-dev installation
         run: |
-          dpkg -L libmp3lame-dev || true  # List the files for debugging purposes
+          ls -l /usr/local/x86_64-w64-mingw32/include/
+          ls -l /usr/local/x86_64-w64-mingw32/lib/
       - name: Build
         run: ./build-windows.sh
       - name: Archive production artifacts
