@@ -48,7 +48,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -y && \
-          sudo apt-get install -y yasm mingw-w64 lame libmp3lame-dev libopus-dev
+          sudo apt-get install -y yasm mingw-w64 libmp3lame-dev:x86_64-w64-mingw32
       - name: Build
         run: ./build-windows.sh
       - name: Archive production artifacts
