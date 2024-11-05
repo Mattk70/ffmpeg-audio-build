@@ -28,7 +28,8 @@ case $ARCH in
             --cross-prefix=aarch64-linux-gnu-
             --target-os=linux
             --arch=aarch64
-            --extra-ldflags="-L/usr/local/lib"
+            --extra-ldflags=-L/usr/local/lib
+            --extra-cflags=-I/usr/local/include
         )
         ;;
     arm*)
