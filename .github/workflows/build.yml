@@ -76,6 +76,9 @@ jobs:
         with:
           name: ffmpeg-windows-${{ env.ARCH }}
           path: artifacts/
+      - name: Output config.log for debugging
+        if: failure()
+        run: cat config.log
 
   package-macos:
     runs-on: macos-latest
