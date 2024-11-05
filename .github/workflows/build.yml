@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -y && \
-          sudo apt-get install -y yasm
+          sudo apt-get install -y yasm libmp3lame-dev
       - name: Install ARM64 compiler
         if: env.ARCH == 'arm64'
         run: |
@@ -48,7 +48,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -y && \
-          sudo apt-get install -y yasm mingw-w64
+          sudo apt-get install -y yasm mingw-w64 libmp3lame-dev
       - name: Build
         run: ./build-windows.sh
       - name: Archive production artifacts
@@ -70,7 +70,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install dependencies
-        run: brew install yasm
+        run: brew install yasm lame
       - name: Build
         run: ./build-macos.sh
       - name: Archive artifacts
