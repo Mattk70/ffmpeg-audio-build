@@ -23,10 +23,9 @@ cd $BUILD_DIR
 tar --strip-components=1 -xf $BASE_DIR/$FFMPEG_TARBALL
 
 FFMPEG_CONFIGURE_FLAGS+=(
-    --cc=gcc
     --prefix=$BASE_DIR/$OUTPUT_DIR
-    --extra-cflags='-static -static-libgcc -static-libstdc++ -I/usr/local/x86_64-w64-mingw32/include'
-    --extra-ldflags=-L/usr/local/x86_64-w64-mingw32/lib
+    --extra-cflags="-static -static-libgcc -static-libstdc++ -I/usr/local/x86_64-w64-mingw32/include"
+    --extra-ldflags="-L/usr/local/x86_64-w64-mingw32/lib"
     --target-os=mingw32
     --arch=$ARCH
     --cross-prefix=$ARCH-w64-mingw32-
