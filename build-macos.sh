@@ -41,7 +41,8 @@ FFMPEG_CONFIGURE_FLAGS+=(
     --enable-cross-compile
     --target-os=darwin
     --arch=$ARCH
-    --extra-ldflags="-target $TARGET -L/opt/homebrew/lib"
+    --pkg-config-flags="--static"
+    --extra-ldflags="-static -L/opt/homebrew/lib -target $TARGET"
     --extra-cflags="-target $TARGET -I/opt/homebrew/include"
     --enable-runtime-cpudetect
 )
