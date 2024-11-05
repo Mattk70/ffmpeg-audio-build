@@ -37,8 +37,6 @@ FFMPEG_CONFIGURE_FLAGS=(
 --disable-videotoolbox
 --disable-audiotoolbox
 --disable-vaapi 
---enable-libopus
---enable-libmp3lame
 --enable-filter=loudnorm
 --enable-filter=aformat
 --enable-filter=aresample
@@ -212,7 +210,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-encoder=alac
 --enable-encoder=eac3
 --enable-encoder=flac
---enable-encoder=libmp3lame
+--enable-encoder=mp3
 --enable-encoder=libopus
 --enable-encoder=ra_144
 --enable-encoder=tta
