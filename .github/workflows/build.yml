@@ -49,26 +49,26 @@ jobs:
         run: |
           sudo apt-get update -y && \
           sudo apt-get install -y yasm mingw-w64
-      - name: Download and build libmp3lame for Windows
-        run: |
-          # Download LAME source code
-          wget https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz
-          tar -xzf lame-3.100.tar.gz
-          cd lame-3.100
+#      - name: Download and build libmp3lame for Windows
+#        run: |
+#          # Download LAME source code
+#          wget https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz
+#          tar -xzf lame-3.100.tar.gz
+#          cd lame-3.100
 
-          # Configure and build for Windows
-          ./configure --host=x86_64-w64-mingw32 --disable-shared --enable-static
-          make
+#          # Configure and build for Windows
+#          ./configure --host=x86_64-w64-mingw32 --disable-shared --enable-static
+#          make
 
-          # Copy the built library to a location that can be accessed by the compiler
-          sudo mkdir -p /usr/local/x86_64-w64-mingw32/lib
-          sudo cp libmp3lame/.libs/libmp3lame.a /usr/local/x86_64-w64-mingw32/lib/
-          sudo mkdir -p /usr/local/x86_64-w64-mingw32/include
-          sudo cp include/lame.h /usr/local/x86_64-w64-mingw32/include/
-      - name: Verify libmp3lame-dev installation
-        run: |
-          ls -l /usr/local/x86_64-w64-mingw32/include/
-          ls -l /usr/local/x86_64-w64-mingw32/lib/
+#          # Copy the built library to a location that can be accessed by the compiler
+#          sudo mkdir -p /usr/local/x86_64-w64-mingw32/lib
+#          sudo cp libmp3lame/.libs/libmp3lame.a /usr/local/x86_64-w64-mingw32/lib/
+#          sudo mkdir -p /usr/local/x86_64-w64-mingw32/include
+#          sudo cp include/lame.h /usr/local/x86_64-w64-mingw32/include/
+#      - name: Verify libmp3lame-dev installation
+#        run: |
+#          ls -l /usr/local/x86_64-w64-mingw32/include/
+#          ls -l /usr/local/x86_64-w64-mingw32/lib/
       - name: Build
         run: ./build-windows.sh
       - name: Archive production artifacts
