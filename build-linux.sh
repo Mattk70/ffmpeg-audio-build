@@ -18,6 +18,10 @@ OUTPUT_DIR=artifacts/ffmpeg-$FFMPEG_VERSION-audio-$ARCH-linux-gnu
 
 case $ARCH in
     x86_64)
+        FFMPEG_CONFIGURE_FLAGS+=(
+            --extra-ldflags="-static -L/usr/local/lib"
+            --extra-cflags=-I/usr/local/include
+        )
         ;;
     i686)
         FFMPEG_CONFIGURE_FLAGS+=(--cc="gcc -m32")
