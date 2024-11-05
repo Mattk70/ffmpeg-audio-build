@@ -23,6 +23,7 @@ cd $BUILD_DIR
 tar --strip-components=1 -xf $BASE_DIR/$FFMPEG_TARBALL
 
 FFMPEG_CONFIGURE_FLAGS+=(
+    --cc=gcc
     --prefix=$BASE_DIR/$OUTPUT_DIR
     --extra-cflags='-static -static-libgcc -static-libstdc++ -I/usr/include -I/usr/local/include'
     --extra-ldflags="-L/usr/lib -L/usr/local/lib"
