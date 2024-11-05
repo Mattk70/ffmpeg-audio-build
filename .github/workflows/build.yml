@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -y && \
-          sudo apt-get install -y yasm libmp3lame-dev libopus-dev
+          sudo apt-get install -y yasm lame libmp3lame-dev libopus-dev
       - name: Install ARM64 compiler
         if: env.ARCH == 'arm64'
         run: |
@@ -48,7 +48,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -y && \
-          sudo apt-get install -y yasm mingw-w64 libmp3lame-dev libopus-dev
+          sudo apt-get install -y yasm mingw-w64 lame libmp3lame-dev libopus-dev
       - name: Build
         run: ./build-windows.sh
       - name: Archive production artifacts
