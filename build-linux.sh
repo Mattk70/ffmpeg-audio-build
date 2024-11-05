@@ -20,8 +20,8 @@ case $ARCH in
     x86_64)
         FFMPEG_CONFIGURE_FLAGS+=(
             --pkg-config-flags="--static"
-            --extra-ldflags="-static -L/usr/local/lib"
-            --extra-cflags=-I/usr/local/include
+            --extra-ldflags="-L/usr/local/lib"
+            --extra-cflags="-static -static-libgcc -static-libstdc++ -I/usr/local/include"
         )
         ;;
     i686)
