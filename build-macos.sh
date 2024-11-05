@@ -42,8 +42,8 @@ FFMPEG_CONFIGURE_FLAGS+=(
     --target-os=darwin
     --arch=$ARCH
     --pkg-config-flags="--static"
-    --extra-ldflags="-static -L/opt/homebrew/lib -target $TARGET"
-    --extra-cflags="-target $TARGET -I/opt/homebrew/include"
+    --extra-ldflags="-L/opt/homebrew/lib, -target $TARGET"
+    --extra-cflags="-static -static-libgcc -static-libstdc++ -I/opt/homebrew/include -target $TARGET"
     --enable-runtime-cpudetect
 )
 

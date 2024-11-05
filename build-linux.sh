@@ -29,13 +29,13 @@ case $ARCH in
         ;;
     arm64)
         FFMPEG_CONFIGURE_FLAGS+=(
-            --pkg-config-flags="--static"
             --enable-cross-compile
             --cross-prefix=aarch64-linux-gnu-
             --target-os=linux
             --arch=aarch64
-            --extra-ldflags="-static -L/usr/local/lib"
-            --extra-cflags=-I/usr/local/include
+            --pkg-config-flags="--static"
+            --extra-ldflags="-L/usr/local/lib"
+            --extra-cflags="-static -static-libgcc -static-libstdc++ -I/usr/local/include"
         )
         ;;
     arm*)
