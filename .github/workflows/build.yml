@@ -48,7 +48,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -y && \
-          sudo apt-get install -y yasm mingw-w64 lame
+          sudo apt-get install -y yasm mingw-w64 lame libmp3lame-dev
 #      - name: Download and build libmp3lame for Windows
 #        run: |
 #          # Download LAME source code
