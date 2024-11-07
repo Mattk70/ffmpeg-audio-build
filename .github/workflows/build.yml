@@ -93,7 +93,8 @@ jobs:
         run: brew install yasm lame opus
       - name: Remove all .dylib files # or it just dynamically links!
         run: |
-          find /opt/homebrew -type f -name "*.dylib" -exec rm -f {} +
+          find /opt/homebrew -type f -name "*lame*.dylib" -exec rm -f {} +
+          find /opt/homebrew -type f -name "*opus*.dylib" -exec rm -f {} +
       - name: Build
         run: ./build-macos.sh
       - name: Archive artifacts
