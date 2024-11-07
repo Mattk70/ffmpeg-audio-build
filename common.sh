@@ -52,7 +52,6 @@ FFMPEG_CONFIGURE_FLAGS=(
 --disable-protocols
 --enable-protocol=file
 --enable-protocol=pipe
---enable-demuxer=image2
 --enable-demuxer=aac
 --enable-demuxer=ac3
 --enable-demuxer=aiff
@@ -96,7 +95,6 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-demuxer=wv
 --enable-demuxer=xwma
 --enable-demuxer=dsf 
---enable-muxer=image2
 --enable-muxer=ac3
 --enable-muxer=aiff
 --enable-muxer=asf
@@ -257,8 +255,5 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-parser=vorbis
 --enable-runtime-cpudetect
 --disable-libxcb
---disable-libX11
---disable-libxcb
---disable-libXau
---disable-libXdmcp
+--disable-autodetect
 )
