@@ -9,14 +9,12 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-static
 --enable-version3
 --enable-pic
-
 --disable-doc
 --disable-debug
 --disable-avdevice
 --disable-swscale
 --disable-programs
 --enable-ffmpeg
---enable-ffprobe
 --disable-network
 --disable-muxers
 --disable-demuxers
@@ -25,6 +23,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --disable-bzlib
 --disable-iconv
 --disable-bsfs
+--disable-filters
 --disable-parsers
 --disable-indevs
 --disable-outdevs
@@ -35,8 +34,8 @@ FFMPEG_CONFIGURE_FLAGS=(
 --disable-videotoolbox
 --disable-audiotoolbox
 --disable-vaapi
-
---disable-filters
+--enable-libopus
+--enable-libmp3lame
 --enable-filter=loudnorm
 --enable-filter=aformat
 --enable-filter=aresample
@@ -50,7 +49,6 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-filter=null
 --enable-filter=setpts
 --enable-filter=trim
-
 --disable-protocols
 --enable-protocol=file
 --enable-protocol=pipe
@@ -96,7 +94,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-demuxer=wav
 --enable-demuxer=wv
 --enable-demuxer=xwma
---enable-demuxer=dsf 
+--enable-demuxer=dsf
 --enable-muxer=ac3
 --enable-muxer=aiff
 --enable-muxer=asf
@@ -132,7 +130,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-muxer=rm
 --enable-muxer=tta
 --enable-muxer=wav
---enable-muxer=wv 
+--enable-muxer=wv
 --enable-decoder=aac
 --enable-decoder=aac_latm
 --enable-decoder=ac3
@@ -209,7 +207,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-encoder=alac
 --enable-encoder=eac3
 --enable-encoder=flac
---enable-encoder=mp3
+--enable-encoder=libmp3lame
 --enable-encoder=libopus
 --enable-encoder=ra_144
 --enable-encoder=tta
@@ -238,7 +236,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-encoder=pcm_s32be
 --enable-encoder=pcm_s32le
 --enable-encoder=pcm_s32le_planar
---enable-encoder=pcm_u8 
+--enable-encoder=pcm_u8
 --enable-encoder=pcm_u16be
 --enable-encoder=pcm_u16le
 --enable-encoder=pcm_u24be
@@ -257,5 +255,11 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-parser=vorbis
 --enable-runtime-cpudetect
 --disable-libxcb
+--disable-appkit
+--disable-metal
+--disable-securetransport
+--disable-coreimage
+--disable-sdl2
 --disable-autodetect
 )
+
