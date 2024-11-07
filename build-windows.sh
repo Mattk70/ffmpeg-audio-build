@@ -31,7 +31,7 @@ EXTRA_CONFIGURE_FLAGS=(
     --cross-prefix=$ARCH-w64-mingw32-
 )
 
-./configure "${EXTRA_CONFIGURE_FLAGS[@]} ${FFMPEG_CONFIGURE_FLAGS[@]}"
+./configure $EXTRA_CONFIGURE_FLAGS ${FFMPEG_CONFIGURE_FLAGS[@]}
 make
 make install
 chown $(stat -c '%u:%g' $BASE_DIR) -R $BASE_DIR/$OUTPUT_DIR
