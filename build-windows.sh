@@ -22,7 +22,7 @@ trap 'rm -rf $BUILD_DIR' EXIT
 cd $BUILD_DIR
 tar --strip-components=1 -xf $BASE_DIR/$FFMPEG_TARBALL
 
-EXTRA_CONFIGURE_FLAGS=(
+FFMPEG_CONFIGURE_FLAGS+=(
     --prefix=$BASE_DIR/$OUTPUT_DIR
     "--extra-cflags='-static -static-libgcc -static-libstdc++ -I/usr/local/x86_64-w64-mingw32/include'"
     --extra-ldflags='-L/usr/local/x86_64-w64-mingw32/lib'
@@ -31,8 +31,7 @@ EXTRA_CONFIGURE_FLAGS=(
     --cross-prefix=$ARCH-w64-mingw32-
 )
 
-echo "FFMPEG_CONFIGURE_FLAGS=${EXTRA_CONFIGURE_FLAGS[@]} ${FFMPEG_CONFIGURE_FLAGS[@]}"
-./configure $EXTRA_CONFIGURE_FLAGS ${FFMPEG_CONFIGURE_FLAGS[@]}
+./configure "${FFMPEG_CONFIGURE_FLAGS[@]}"
 make
 make install
 chown $(stat -c '%u:%g' $BASE_DIR) -R $BASE_DIR/$OUTPUT_DIR
