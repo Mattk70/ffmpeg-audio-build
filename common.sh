@@ -24,7 +24,6 @@ FFMPEG_CONFIGURE_FLAGS=(
 --disable-lzma
 --disable-bzlib
 --disable-iconv
---disable-libxcb
 --disable-bsfs
 --disable-filters
 --disable-parsers
@@ -257,4 +256,9 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-parser=tak
 --enable-parser=vorbis
 --enable-runtime-cpudetect
+--disable-libxcb
+--disable-libX11
+--disable-libxcb
+--disable-libXau
+--disable-libXdmcp
 )
