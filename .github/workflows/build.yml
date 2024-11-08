@@ -57,18 +57,13 @@ jobs:
           cd lame-3.100
 
           # Configure and build for Windows
-          ./configure --host=x86_64-w64-mingw32 --target-os=mingw32 --arch=$ARCH --disable-shared --enable-static
+          ./configure --host=x86_64-w64-mingw32 --build=mingw32 --arch=$ARCH --disable-shared --enable-static --disable-doc --disable-man --disable-html --disable-frontend --prefix=/usr -cc=gcc
           make
-
-          # Copy the built library to a location that can be accessed by the compiler
-          sudo mkdir -p /usr/lib/x86_64-w64-mingw32
-          sudo cp libmp3lame/.libs/libmp3lame.a /usr/lib/x86_64-w64-mingw32
-          sudo mkdir -p /usr/include/lame
-          sudo cp include/lame.h /usr/include/lame
+          sudo make install
       - name: Verify lib locations
         run: |
-          ls -al /usr/include/lame
-          ls -al /usr/lib/x86_64-w64-mingw32
+          ls -al /usr/lame
+          ls -al /usr/lib/
       - name: Build
         run: ./build-windows.sh
       - name: Archive production artifacts
