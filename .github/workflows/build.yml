@@ -65,6 +65,11 @@ jobs:
           sudo cp libmp3lame/.libs/libmp3lame.a /usr/lib/x86_64-w64-mingw32
           sudo mkdir -p /usr/include/lame
           sudo cp include/lame.h /usr/include/lame
+      - name: Verify lib locations
+        run: |
+          ls -al /usr/include/lame
+          ls -al /usr/lib/x86_64-w64-mingw32
+          find / -name libmp3lame.a -ls
       - name: Build
         run: ./build-windows.sh
       - name: Archive production artifacts
