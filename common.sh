@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 FFMPEG_VERSION=7.1
-FFMPEG_TARBALL=ffmpeg-$FFMPEG_VERSION.tar.gz
+FFMPEG_TARBALL=ffmpeg-$FFMPEG_VERSION.tar.xz
 FFMPEG_TARBALL_URL=http://ffmpeg.org/releases/$FFMPEG_TARBALL
 
 FFMPEG_CONFIGURE_FLAGS=(
