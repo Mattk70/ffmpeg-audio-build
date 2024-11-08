@@ -57,13 +57,13 @@ jobs:
           cd lame-3.100
 
           # Configure and build for Windows
-          ./configure --host=x86_64-w64-mingw32 --build=mingw32 --disable-shared --enable-static --disable-doc --disable-man --disable-html --disable-frontend --prefix=/usr 
+          ./configure --host=x86_64-w64-mingw32 --build=mingw32 --disable-shared --enable-static --disable-doc --disable-man --disable-html --disable-frontend
           make
           sudo make install
       - name: Verify lib locations
         run: |
-          ls -al /usr/include/lame
-          ls -al /usr/lib/
+          ls -al /usr/local/include/lame
+          ls -al /usr/local/lib/
       - name: Build
         run: ./build-windows.sh
       - name: Archive production artifacts
