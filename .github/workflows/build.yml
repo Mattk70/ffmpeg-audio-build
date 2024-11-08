@@ -62,7 +62,7 @@ jobs:
           sudo make install
       - name: Verify lib locations
         run: |
-          ls -al /usr/lame
+          ls -al /usr/include/lame
           ls -al /usr/lib/
       - name: Build
         run: ./build-windows.sh
