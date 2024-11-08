@@ -57,7 +57,7 @@ jobs:
           cd lame-3.100
 
           # Configure and build for Windows
-          ./configure --host=x86_64-w64-mingw32 --disable-shared --enable-static
+          ./configure --host=x86_64-w64-mingw32 --target-os=mingw32 --arch=$ARCH --disable-shared --enable-static
           make
 
           # Copy the built library to a location that can be accessed by the compiler
@@ -69,7 +69,6 @@ jobs:
         run: |
           ls -al /usr/include/lame
           ls -al /usr/lib/x86_64-w64-mingw32
-          find / -name libmp3lame.a -ls
       - name: Build
         run: ./build-windows.sh
       - name: Archive production artifacts
