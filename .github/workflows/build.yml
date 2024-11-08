@@ -71,7 +71,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install dependencies
         run: brew install yasm lame opus
-      - name: Remove all .dylib files # or it just dynamically links!
+      - name: Remove opus and lame .dylib files # or it just dynamically links!
         run: |
           find /opt/homebrew -type f -name "*lame*.dylib" -exec rm -f {} +
           find /opt/homebrew -type f -name "*opus*.dylib" -exec rm -f {} +
