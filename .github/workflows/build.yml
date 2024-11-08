@@ -51,7 +51,6 @@ jobs:
           sudo apt-get install -y yasm mingw-w64 libmp3lame-dev libopus-dev
       - name: verify lame install path
         run: |
-          dpkg -L lame && \
           dpkg -L libmp3lame-dev
       - name: Build
         run: ./build-windows.sh
