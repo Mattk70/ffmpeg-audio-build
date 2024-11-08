@@ -61,13 +61,10 @@ jobs:
           make
 
           # Copy the built library to a location that can be accessed by the compiler
-          sudo mkdir -p /usr/local/x86_64-w64-mingw32/lib
-          sudo cp libmp3lame/.libs/libmp3lame.a /usr/local/x86_64-w64-mingw32/lib/
-          # sudo mkdir -p /usr/local/x86_64-w64-mingw32/include
-          sudo cp include/lame.h /usr/include/
-      - name: verify lame install path
-        run: |
-          dpkg -L libmp3lame-dev
+          sudo mkdir -p /usr/lib/x86_64-w64-mingw32
+          sudo cp libmp3lame/.libs/libmp3lame.a /usr/lib/x86_64-w64-mingw32
+          sudo mkdir -p /usr/include/lame
+          sudo cp include/lame.h /usr/include/lame
       - name: Build
         run: ./build-windows.sh
       - name: Archive production artifacts
