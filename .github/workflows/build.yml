@@ -57,7 +57,7 @@ jobs:
           cd lame-3.100
 
           # Configure and build for Windows
-          ./configure --host=x86_64-w64-mingw32 --build=mingw32 --disable-shared --enable-static --disable-doc --disable-man --disable-html --disable-frontend --cc=x86_64-w64-mingw32-gcc
+          ./configure --host=x86_64-w64-mingw32 --build=mingw32 --disable-shared --enable-static --disable-doc --disable-man --disable-html --disable-frontend CC=x86_64-w64-mingw32-gcc
 
           make
           sudo make install
