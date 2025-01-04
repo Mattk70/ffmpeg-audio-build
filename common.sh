@@ -35,7 +35,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --disable-audiotoolbox
 --disable-vaapi
 --enable-libopus
---with-libvorbis
+--enable-libvorbis
 --enable-libmp3lame
 --enable-filter=loudnorm
 --enable-filter=aformat
@@ -105,6 +105,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-muxer=avi
 --enable-muxer=flac
 --enable-muxer=opus
+--enable-muxer=vorbis
 --enable-muxer=matroska
 --enable-muxer=mov
 --enable-muxer=m4v
