@@ -35,7 +35,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --disable-audiotoolbox
 --disable-vaapi
 --enable-libopus
---enable-libvorbis
+--with-libvorbis
 --enable-libmp3lame
 --enable-filter=loudnorm
 --enable-filter=aformat
