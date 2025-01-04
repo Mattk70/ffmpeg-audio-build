@@ -80,17 +80,18 @@ jobs:
         # https://developer.apple.com/documentation/apple-silicon/building-a-universal-macos-binary#Update-the-Architecture-List-of-Custom-Makefiles
         target:
           # - x86_64-apple-macos10.9
-          - arm64-apple-macos11
+          - arm64-apple-macos14
     env:
       TARGET: ${{ matrix.target }}
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
-        run: brew install yasm lame opus
-      - name: Remove opus and lame .dylib files # or it just dynamically links!
+        run: brew install yasm lame opus vorbis
+      - name: Remove vorbis, opus and lame .dylib files # or it just dynamically links!
         run: |
           find /opt/homebrew -type f -name "*lame*.dylib" -exec rm -f {} +
           find /opt/homebrew -type f -name "*opus*.dylib" -exec rm -f {} +
+          find /opt/homebrew -type f -name "*vorbis*.dylib" -exec rm -f {} +
       - name: Build
         run: ./build-macos.sh
       - name: Archive artifacts
