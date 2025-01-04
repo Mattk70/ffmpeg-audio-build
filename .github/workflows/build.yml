@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -y && \
-          sudo apt-get install -y yasm lame libmp3lame-dev libopus-dev
+          sudo apt-get install -y yasm lame libmp3lame-dev libopus-dev libvorbis-dev
       - name: Install ARM64 compiler
         if: env.ARCH == 'arm64'
         run: |
