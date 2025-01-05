@@ -27,9 +27,9 @@ FFMPEG_CONFIGURE_FLAGS=(
     --prefix=$BASE_DIR/$OUTPUT_DIR
     --extra-cflags='-static -static-libgcc -static-libstdc++ -I/usr/local/include'
     --extra-ldflags='-L/usr/local/lib'
-    --target-os=mingw32
+    --target-os=mingw64
     --arch=$ARCH
-    --cross-prefix=$ARCH-w64-mingw32
+    --cross-prefix=$ARCH-w64-mingw64
     "${FFMPEG_CONFIGURE_FLAGS[@]}"
 )
 echo "${FFMPEG_CONFIGURE_FLAGS[@]}"
