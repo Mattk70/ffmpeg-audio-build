@@ -29,11 +29,12 @@ FFMPEG_CONFIGURE_FLAGS=(
     --extra-ldflags='-L/usr/local/lib'
     --target-os=mingw32
     --arch=$ARCH
-    --cross-prefix=$ARCH-w64-mingw32- 
-)+FFMPEG_CONFIGURE_FLAGS
+    --cross-prefix=$ARCH-w64-mingw32
+    "${FFMPEG_CONFIGURE_FLAGS[@]}"
+)
 echo "${FFMPEG_CONFIGURE_FLAGS[@]}"
 
-./configure "${FFMPEG_CONFIGURE_FLAGS[@]}" || (cat ffbuild/config.log && exit 1)
-make -j8
+./configure "${FFMPEG_CONFIGURE_FLAGS[@]}"
+make
 make install
 chown $(stat -c '%u:%g' $BASE_DIR) -R $BASE_DIR/$OUTPUT_DIR
