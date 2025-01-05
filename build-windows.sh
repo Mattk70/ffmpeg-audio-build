@@ -22,18 +22,18 @@ trap 'rm -rf $BUILD_DIR' EXIT
 cd $BUILD_DIR
 tar --strip-components=1 -xf $BASE_DIR/$FFMPEG_TARBALL
 
-FFMPEG_CONFIGURE_FLAGS+=(
+FFMPEG_CONFIGURE_FLAGS=(
     --cc=gcc
     --prefix=$BASE_DIR/$OUTPUT_DIR
     --extra-cflags='-static -static-libgcc -static-libstdc++ -I/usr/local/include'
     --extra-ldflags='-L/usr/local/lib'
     --target-os=mingw32
     --arch=$ARCH
-    --cross-prefix=$ARCH-w64-mingw32-
-)
+    --cross-prefix=$ARCH-w64-mingw32- 
+)+FFMPEG_CONFIGURE_FLAGS
 echo "${FFMPEG_CONFIGURE_FLAGS[@]}"
 
-./configure "${FFMPEG_CONFIGURE_FLAGS[@]}"
+./configure "${FFMPEG_CONFIGURE_FLAGS[@]}" || (cat ffbuild/config.log && exit 1)
 make -j8
 make install
 chown $(stat -c '%u:%g' $BASE_DIR) -R $BASE_DIR/$OUTPUT_DIR
