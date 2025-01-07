@@ -87,11 +87,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install dependencies
         run: brew install yasm lame opus libvorbis libogg
-      - name: Remove vorbis, opus and lame .dylib files # or it just dynamically links!
+      - name: Remove vorbis, ogg, opus and lame .dylib files # or it just dynamically links!
         run: |
           find /opt/homebrew -type f -name "*lame*.dylib" -exec rm -f {} +
           find /opt/homebrew -type f -name "*opus*.dylib" -exec rm -f {} +
           find /opt/homebrew -type f -name "*vorbis*.dylib" -exec rm -f {} +
+          find /opt/homebrew -type f -name "*libogg*.dylib" -exec rm -f {} +
       - name: Build
         run: ./build-macos.sh
       - name: Archive artifacts

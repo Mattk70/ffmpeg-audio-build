@@ -9,7 +9,7 @@ source common.sh
 
 if [ ! -e $FFMPEG_TARBALL ]
 then
-	curl -s -L -O $FFMPEG_TARBALL_URL
+    curl -s -L -O $FFMPEG_TARBALL_URL
 fi
 
 : ${ARCH?}
@@ -90,3 +90,6 @@ make -j8
 make install
 
 chown $(stat -c '%u:%g' $BASE_DIR) -R $BASE_DIR/$OUTPUT_DIR
+
+# Test the build
+$BASE_DIR/$OUTPUT_DIR/bin/ffmpeg -version

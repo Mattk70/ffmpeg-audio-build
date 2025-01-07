@@ -14,7 +14,7 @@ fi
 
 : ${ARCH?}
 
-OUTPUT_DIR=artifacts/ffmpeg-$FFMPEG_VERSION-audio-$ARCH-w64-mingw64
+OUTPUT_DIR=artifacts/ffmpeg-$FFMPEG_VERSION-audio-$ARCH-w64-mingw32
 
 BUILD_DIR=$(mktemp -d -p $(pwd) build.XXXXXXXX)
 trap 'rm -rf $BUILD_DIR' EXIT
@@ -22,15 +22,14 @@ trap 'rm -rf $BUILD_DIR' EXIT
 cd $BUILD_DIR
 tar --strip-components=1 -xf $BASE_DIR/$FFMPEG_TARBALL
 
-FFMPEG_CONFIGURE_FLAGS=(
+FFMPEG_CONFIGURE_FLAGS+=(
     --cc=gcc
     --prefix=$BASE_DIR/$OUTPUT_DIR
     --extra-cflags='-static -static-libgcc -static-libstdc++ -I/usr/local/include'
     --extra-ldflags='-L/usr/local/lib'
-    --target-os=mingw64
+    --target-os=mingw32
     --arch=$ARCH
-    --cross-prefix=$ARCH-w64-mingw64
-    "${FFMPEG_CONFIGURE_FLAGS[@]}"
+    --cross-prefix=$ARCH-w64-mingw32-
 )
 echo "${FFMPEG_CONFIGURE_FLAGS[@]}"
 
