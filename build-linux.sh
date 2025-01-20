@@ -93,3 +93,5 @@ chown $(stat -c '%u:%g' $BASE_DIR) -R $BASE_DIR/$OUTPUT_DIR
 
 # Test the build
 $BASE_DIR/$OUTPUT_DIR/bin/ffmpeg -version
+# Check for linked libraries
+ldd $BASE_DIR/$OUTPUT_DIR/bin/ffmpeg
