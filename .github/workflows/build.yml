@@ -24,10 +24,10 @@ jobs:
           sudo apt-get install -y yasm lame libmp3lame-dev libopus-dev libvorbis-dev libogg-dev
       - name: Remove vorbis, ogg, opus and lame .so files # or it just dynamically links!
         run: |
-          find /usr/lib/x86_64-linux-gnu -type f -name "*lame*.so*" -exec rm -f {} +
-          find /usr/lib/x86_64-linux-gnu -type f -name "*opus*.so*" -exec rm -f {} +
-          find /usr/lib/x86_64-linux-gnu -type f -name "*vorbis*.so*" -exec rm -f {} +
-          find /usr/lib/x86_64-linux-gnu -type f -name "*libogg*.so*" -exec rm -f {} +
+          sudo find /usr/lib/x86_64-linux-gnu -type f -name "*lame*.so*" -exec rm -f {} +
+          sudo find /usr/lib/x86_64-linux-gnu -type f -name "*opus*.so*" -exec rm -f {} +
+          sudo find /usr/lib/x86_64-linux-gnu -type f -name "*vorbis*.so*" -exec rm -f {} +
+          sudo find /usr/lib/x86_64-linux-gnu -type f -name "*libogg*.so*" -exec rm -f {} +
       - name: Install ARM64 compiler
         if: env.ARCH == 'arm64'
         run: |
