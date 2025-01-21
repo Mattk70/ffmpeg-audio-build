@@ -28,6 +28,9 @@ export CXX=x86_64-w64-mingw32-g++
 export AR=x86_64-w64-mingw32-ar
 export RANLIB=x86_64-w64-mingw32-ranlib
 
+echo ${PATH}
+exit(0)
+
 FFMPEG_CONFIGURE_FLAGS+=(
     # --cc=gcc
     --prefix=$BASE_DIR/$OUTPUT_DIR
