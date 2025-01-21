@@ -71,7 +71,8 @@ jobs:
 
       - name: Verify lib locations
         run: |
-          pacman -Ql mingw-w64-x86_64-lame mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libogg mingw-w64-x86_64-opus
+          pacman -Ql mingw-w64-x86_64-lame mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libogg mingw-w64-x86_64-opus mingw-w64-x86_64-nasm
+          echo ${PATH}
         shell: msys2 {0}
 
       # - name: Verify lib locations
