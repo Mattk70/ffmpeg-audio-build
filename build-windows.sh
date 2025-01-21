@@ -28,8 +28,10 @@ export CXX=x86_64-w64-mingw32-g++
 export AR=x86_64-w64-mingw32-ar
 export RANLIB=x86_64-w64-mingw32-ranlib
 
+which x86_64-w64-mingw32-nm
+which nasm
 echo ${PATH}
-exit(0)
+exit
 
 FFMPEG_CONFIGURE_FLAGS+=(
     # --cc=gcc
