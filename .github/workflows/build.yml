@@ -56,22 +56,32 @@ jobs:
         run: |
           sudo apt-get update -y && \
           sudo apt-get install -y yasm mingw-w64 libopus-dev libvorbis-dev
-      - name: Download and build libmp3lame for Windows
+      - name: Install dependencies
         run: |
-          # Download LAME source code
-          wget https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz
-          tar -xzf lame-3.100.tar.gz
-          cd lame-3.100
-
-          # Configure and build for Windows
-          ./configure --arch=x86_64 --host=x86_64-w64-mingw32 --target-os=mingw32 --build=mingw32 --disable-shared --enable-static --disable-doc --disable-man --disable-html --disable-frontend CC=x86_64-w64-mingw32-gcc
-
-          make -j8
-          sudo make install
+            pacman -Syu --noconfirm
+            pacman -S --needed --noconfirm \
+              mingw-w64-x86_64-lame \
+              mingw-w64-x86_64-libvorbis \
+              mingw-w64-x86_64-libogg \
+              mingw-w64-x86_64-libopus
       - name: Verify lib locations
         run: |
-          ls -al /usr/local/include/lame
-          ls -al /usr/local/lib/
+          ls -al /mingw64/include/lame
+          ls -al /mingw64/lib/
+          # # Download LAME source code
+          # wget https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz
+          # tar -xzf lame-3.100.tar.gz
+          # cd lame-3.100
+
+          # # Configure and build for Windows
+          # ./configure --arch=x86_64 --host=x86_64-w64-mingw32 --target-os=mingw32 --build=mingw32 --disable-shared --enable-static --disable-doc --disable-man --disable-html --disable-frontend CC=x86_64-w64-mingw32-gcc
+
+          # make -j8
+          # sudo make install
+      # - name: Verify lib locations
+      #   run: |
+      #     ls -al /usr/local/include/lame
+      #     ls -al /usr/local/lib/
       - name: Build
         run: ./build-windows.sh
       - name: Archive production artifacts
