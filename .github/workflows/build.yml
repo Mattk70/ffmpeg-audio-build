@@ -52,18 +52,17 @@ jobs:
       ARCH: ${{ matrix.arch }}
     steps:
       - uses: actions/checkout@v4
-      - name: Install dependencies
-        run: |
-          sudo apt-get update -y && \
-          sudo apt-get install -y yasm mingw-w64 libopus-dev libvorbis-dev
-      - name: Install dependencies
-        run: |
-            pacman -Syu --noconfirm
-            pacman -S --needed --noconfirm \
-              mingw-w64-x86_64-lame \
-              mingw-w64-x86_64-libvorbis \
-              mingw-w64-x86_64-libogg \
-              mingw-w64-x86_64-libopus
+
+      - name: Install MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true  # Update MSYS2 packages after installation
+          install: >-   # Preinstall essential packages
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-lame
+            mingw-w64-x86_64-libvorbis
+            mingw-w64-x86_64-libogg
+            mingw-w64-x86_64-libopus
       - name: Verify lib locations
         run: |
           ls -al /mingw64/include/lame
