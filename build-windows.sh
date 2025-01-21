@@ -28,13 +28,13 @@ export CXX=x86_64-w64-mingw32-g++
 export AR=x86_64-w64-mingw32-ar
 export RANLIB=x86_64-w64-mingw32-ranlib
 
-which x86_64-w64-mingw32-nm
+which nm
 which nasm
 echo ${PATH}
-exit
+
 
 FFMPEG_CONFIGURE_FLAGS+=(
-    # --cc=gcc
+    --nm=/mingw64/bin/nm.exe
     --prefix=$BASE_DIR/$OUTPUT_DIR
     --extra-cflags='-static -static-libgcc -static-libstdc++ -I/mingw64/include'
     --extra-ldflags='-L/mingw64/lib'
