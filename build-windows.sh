@@ -30,7 +30,7 @@ export RANLIB=x86_64-w64-mingw32-ranlib
 
 which nm
 # which nasm
-find /c/usr -name *nasm* -ls
+# find /c/usr -name *nasm* -ls
 echo ${PATH}
 
 
