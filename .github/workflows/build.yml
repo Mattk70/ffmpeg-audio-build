@@ -71,7 +71,8 @@ jobs:
 
       - name: Verify lib locations
         run: |
-          pacman -Ql mingw-w64-x86_64-binutils
+          pacman -Ql mingw-w64-x86_64-lame mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libogg mingw-w64-x86_64-opus
+
           echo ${PATH}
         shell: msys2 {0}
 
@@ -82,7 +83,7 @@ jobs:
       - name: Build
         run: |
           export MSYSTEM=MINGW64
-          export PATH="/mingw64/x86_64-w64-mingw32/bin$PATH"
+          export PATH="/mingw64/x86_64-w64-mingw32/bin:$PATH"
           ./build-windows.sh
         shell: bash
       - name: Archive production artifacts
