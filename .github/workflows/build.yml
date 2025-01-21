@@ -80,8 +80,11 @@ jobs:
       #     ls -al /usr/local/include/lame
       #     ls -al /usr/local/lib/
       - name: Build
-        run: ./build-windows.sh
-        shell: msys2 {0}
+        run: |
+          export MSYSTEM=MINGW64
+          export PATH="/mingw64/bin:$PATH"
+          ./build-windows.sh
+        shell: bash
       - name: Archive production artifacts
         uses: actions/upload-artifact@v4
         with:
