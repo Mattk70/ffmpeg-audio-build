@@ -28,8 +28,7 @@ export CXX=x86_64-w64-mingw32-g++
 export AR=x86_64-w64-mingw32-ar
 export RANLIB=x86_64-w64-mingw32-ranlib
 
-which nm
-which nasm
+
 echo ${PATH}
 
 
