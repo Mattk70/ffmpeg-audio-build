@@ -30,9 +30,9 @@ export RANLIB=x86_64-w64-mingw32-ranlib
 
 which nm
 # which nasm
-find /usr -name *nasm* -ls
+find /c/usr -name *nasm* -ls
 echo ${PATH}
-exit
+
 
 FFMPEG_CONFIGURE_FLAGS+=(
     --nm=/mingw64/bin/nm.exe
