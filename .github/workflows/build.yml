@@ -66,25 +66,15 @@ jobs:
       - name: Verify lib locations
         run: |
           pacman -Ql mingw-w64-x86_64-lame mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libogg mingw-w64-x86_64-opus
+        shell: bash
 
-          # ls  /mingw64/include/lame
-          # ls  /mingw64/lib/
-          # # Download LAME source code
-          # wget https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz
-          # tar -xzf lame-3.100.tar.gz
-          # cd lame-3.100
-
-          # # Configure and build for Windows
-          # ./configure --arch=x86_64 --host=x86_64-w64-mingw32 --target-os=mingw32 --build=mingw32 --disable-shared --enable-static --disable-doc --disable-man --disable-html --disable-frontend CC=x86_64-w64-mingw32-gcc
-
-          # make -j8
-          # sudo make install
       # - name: Verify lib locations
       #   run: |
       #     ls -al /usr/local/include/lame
       #     ls -al /usr/local/lib/
       - name: Build
         run: ./build-windows.sh
+        shell: bash
       - name: Archive production artifacts
         uses: actions/upload-artifact@v4
         with:
