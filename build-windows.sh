@@ -30,7 +30,7 @@ export RANLIB=x86_64-w64-mingw32-ranlib
 
 which nm
 # which nasm
-find / -name lame.h -ls
+find /c/mingw64 -name lame.h -ls
 echo ${PATH}
 
 
