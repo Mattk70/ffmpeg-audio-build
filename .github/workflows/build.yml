@@ -58,6 +58,7 @@ jobs:
         with:
           update: true  # Update MSYS2 packages after installation
           cache: true  # Enable caching of the MSYS2 installation
+          msystem: UCRT64
           install: >-   # Preinstall essential packages
             mingw-w64-x86_64-gcc
             mingw-w64-x86_64-lame
@@ -87,7 +88,6 @@ jobs:
       #     ls -al /usr/local/lib/
       - name: Build
         run: |
-          export MSYSTEM=MINGW64
           export PATH="/c/mingw64/x86_64-w64-mingw32/bin:$PATH"
           ./build-windows.sh
         shell: bash
