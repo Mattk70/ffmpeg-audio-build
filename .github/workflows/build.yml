@@ -62,7 +62,7 @@ jobs:
             mingw-w64-x86_64-lame
             mingw-w64-x86_64-libvorbis
             mingw-w64-x86_64-libogg
-            mingw-w64-x86_64-libopus
+            mingw-w64-x86_64-opus
       - name: Verify lib locations
         run: |
           ls -al /mingw64/include/lame
