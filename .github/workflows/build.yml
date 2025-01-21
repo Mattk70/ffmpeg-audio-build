@@ -65,8 +65,10 @@ jobs:
             mingw-w64-x86_64-opus
       - name: Verify lib locations
         run: |
-          ls  /mingw64/include/lame
-          ls  /mingw64/lib/
+          pacman -Ql mingw-w64-x86_64-lame mingw-w64-x86_64-libvorbis mingw-w64-x86_64-libogg mingw-w64-x86_64-opus
+
+          # ls  /mingw64/include/lame
+          # ls  /mingw64/lib/
           # # Download LAME source code
           # wget https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz
           # tar -xzf lame-3.100.tar.gz
