@@ -82,6 +82,7 @@ jobs:
       - name: Build
         run: |
           export MSYSTEM=MINGW64
+          export PATH="/mingw64/x86_64-w64-mingw32/bin$PATH"
           ./build-windows.sh
         shell: bash
       - name: Archive production artifacts

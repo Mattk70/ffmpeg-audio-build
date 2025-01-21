@@ -33,6 +33,7 @@ echo ${PATH}
 
 
 FFMPEG_CONFIGURE_FLAGS+=(
+    --nm=/c/mingw64/bin/nm.exe
     --prefix=$BASE_DIR/$OUTPUT_DIR
     --extra-cflags='-static -static-libgcc -static-libstdc++ -I/mingw64/include'
     --extra-ldflags='-L/mingw64/lib'
