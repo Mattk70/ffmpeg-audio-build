@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update -y && \
-          sudo apt-get install -y yasm lame libmp3lame-dev libopus-dev libvorbis-dev libogg-dev libc6-dev 
+          sudo apt-get install -y yasm lame libmp3lame-dev libopus-dev libvorbis-dev libogg-dev libc6-dev binutils
       - name: Remove vorbis, ogg, opus and lame .so files # or it just dynamically links!
         run: |
           sudo find /usr/lib/x86_64-linux-gnu -type f -name "*lame*.so*" -exec rm -f {} +

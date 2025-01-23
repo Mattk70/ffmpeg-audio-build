@@ -41,6 +41,7 @@ FFMPEG_CONFIGURE_FLAGS+=(
     --prefix=$BASE_DIR/$OUTPUT_DIR
     --extra-cflags='-static -static-libgcc -static-libstdc++ -I/c/mingw64/include'
     --extra-ldflags='-L/mingw64/lib'
+    --pkg-config-flags="--static"
     --target-os=mingw32
     --arch=$ARCH
     --cross-prefix=$ARCH-w64-mingw32-
@@ -48,6 +49,6 @@ FFMPEG_CONFIGURE_FLAGS+=(
 echo "${FFMPEG_CONFIGURE_FLAGS[@]}"
 
 ./configure "${FFMPEG_CONFIGURE_FLAGS[@]}"
-make -j8
+make -j$(nproc)
 make install
 chown $(stat -c '%u:%g' $BASE_DIR) -R $BASE_DIR/$OUTPUT_DIR
