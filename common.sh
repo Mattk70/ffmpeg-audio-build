@@ -40,6 +40,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-filter=loudnorm
 --enable-filter=aformat
 --enable-filter=aresample
+--enable-filter=asetrate
 --enable-filter=afade
 --enable-filter=volume
 --enable-filter=highpass
