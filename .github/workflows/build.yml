@@ -56,19 +56,19 @@ jobs:
       - name: Install MSYS2
         uses: msys2/setup-msys2@v2
         with:
-          update: true  # Update MSYS2 packages after installation
-          cache: true  # Enable caching of the MSYS2 installation
-         # msystem: UCRT64
-          install: >-   # Preinstall essential packages
+          update: true
+          cache: true
+          msystem: MINGW64  # Explicitly specify the system
+          install: >-
             mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-make
+            mingw-w64-x86_64-pkg-config
             mingw-w64-x86_64-lame
             mingw-w64-x86_64-libvorbis
             mingw-w64-x86_64-libogg
             mingw-w64-x86_64-opus
             mingw-w64-x86_64-nasm
             mingw-w64-x86_64-binutils
-            mingw-w64-x86_64-nasm
-            mingw-w64-x86_64-gcc
 
       - name: Verify lib locations
         run: |
