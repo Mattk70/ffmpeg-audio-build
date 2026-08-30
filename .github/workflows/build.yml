@@ -60,7 +60,7 @@ jobs:
           cache: true
           msystem: MINGW64  # Explicitly specify the system
           install: >-
-            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-gcc=14.2.0
             mingw-w64-x86_64-make
             mingw-w64-x86_64-pkg-config
             mingw-w64-x86_64-lame
