@@ -15,6 +15,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --disable-swscale
 --disable-programs
 --enable-ffmpeg
+--enable-ffprobe
 --disable-network
 --disable-muxers
 --disable-demuxers
