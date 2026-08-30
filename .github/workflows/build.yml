@@ -110,8 +110,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
-        run: brew install yasm libmp3lame opus libvorbis libogg
-        
+        run: brew install yasm opus libvorbis libogg
+      
+      - name: Install libmp3lame
+        run: |
+          # Ensure Homebrew packages are ARM64 compatible
+          brew install lame --force-bottle
       - name: Remove vorbis, ogg, opus and lame .dylib files # or it just dynamically links!
         run: |
           find /opt/homebrew -type f -name "*lame*.dylib" -exec rm -f {} +
