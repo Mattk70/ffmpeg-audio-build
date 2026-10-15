@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+# ensure mingw-ucrt bin is first so mingw tools are found
+export PATH="/c/ucrt64/bin:$PATH"
+
+# required commands
+required="cmp make gcc pkg-config nasm"
+for cmd in $required; do
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    echo "ERROR: required command '$cmd' not found in PATH." >&2
+    echo "Current PATH: $PATH" >&2
+    exit 1
+  fi
+done
+
+
 set -eu
 
 cd $(dirname $0)
