@@ -31,16 +31,16 @@ export RANLIB=x86_64-w64-mingw32-ranlib
 which nm
 # which nasm
 
-ls /mingw64/lib/libmp3*
-ls /mingw64/include/lame
+ls /ucrt64/lib/libmp3*
+ls /ucrt64/include/lame
 echo ${PATH}
 
 
 FFMPEG_CONFIGURE_FLAGS+=(
-    --nm=/mingw64/bin/nm.exe
+    --nm=/ucrt64/bin/nm.exe
     --prefix=$BASE_DIR/$OUTPUT_DIR
-    --extra-cflags='-static -static-libgcc -static-libstdc++ -I/c/mingw64/include'
-    --extra-ldflags='-L/mingw64/lib'
+    --extra-cflags='-static -static-libgcc -static-libstdc++ -I/c/ucrt64/include'
+    --extra-ldflags='-L/ucrt64/lib'
     --pkg-config-flags="--static"
     --target-os=mingw32
     --arch=$ARCH

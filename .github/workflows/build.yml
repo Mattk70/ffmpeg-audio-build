@@ -110,7 +110,6 @@ jobs:
       - name: Install libmp3lame
         run: |
           # Ensure Homebrew packages are ARM64 compatible
-          brew uninstall lame
           export MACOSX_DEPLOYMENT_TARGET=14.0
           brew install lame --build-from-source
           otool -l "$(brew --prefix lame)/bin/lame" | grep -A 5 LC_BUILD_VERSION
