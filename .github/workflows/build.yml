@@ -60,10 +60,10 @@ jobs:
           cache: true
           msystem: UCRT64
           install: >-
-            gcc
-            diffutils
-            make
-            pkg-config
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-diffutils
+            mingw-w64-ucrt-x86_64-make
+            mingw-w64-ucrt-x86_64-pkg-config
             mingw-w64-ucrt-x86_64-lame
             mingw-w64-ucrt-x86_64-libvorbis
             mingw-w64-ucrt-x86_64-libogg
@@ -111,15 +111,15 @@ jobs:
       - name: Install libmp3lame
         run: |
           # Ensure Homebrew packages are ARM64 compatible
-          # export MACOSX_DEPLOYMENT_TARGET=14.0
-          # brew install lame --build-from-source
-          # otool -l "$(brew --prefix lame)/bin/lame" | grep -A 5 LC_BUILD_VERSION
-          curl -fsSL -o lame.tar.gz "https://downloads.sourceforge.net/project/lame/4.0/lame-4.0.tar.gz" 
-          tar xzf lame.tar.gz 
-          cd lame-3.110 
-          ./configure --prefix=/opt/homebrew/opt/lame --enable-static --disable-shared 
-          make -j$(sysctl -n hw.ncpu) 
-          sudo make install
+          export MACOSX_DEPLOYMENT_TARGET=14.0
+          brew install lame --build-from-source
+          otool -l "$(brew --prefix lame)/bin/lame" | grep -A 5 LC_BUILD_VERSION
+          # curl -fsSL -o lame.tar.gz "https://downloads.sourceforge.net/project/lame/4.0/lame-4.0.tar.gz" 
+          # tar xzf lame.tar.gz 
+          # cd lame-3.110 
+          # ./configure --prefix=/opt/homebrew/opt/lame --enable-static --disable-shared 
+          # make -j$(sysctl -n hw.ncpu) 
+          # sudo make install
       - name: Remove vorbis, ogg, opus and lame .dylib files # or it just dynamically links!
         run: |
           find /opt/homebrew -type f -name "*lame*.dylib" -exec rm -f {} +
