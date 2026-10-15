@@ -204,8 +204,10 @@ jobs:
 
           # Remove a legacy linker flag that Xcode 26's ld rejects.
           perl -pi -e 's/\s*-force_cpusubtype_ALL\b//g' libtool
-          
-          make -j"$(sysctl -n hw.ncpu)"
+          grep -R -n -- '-force_cpusubtype_ALL' . || true
+          make V=8 -j"$(sysctl -n hw.ncpu)"
+
+          # make -j"$(sysctl -n hw.ncpu)"
           make install
 
           test -f "$VORBIS_PREFIX/lib/libvorbis.a"
