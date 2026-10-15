@@ -44,8 +44,11 @@ $MPG123_PREFIX/lib/pkgconfig:\
 $OPUS_PREFIX/lib/pkgconfig:\
 $VORBIS_PREFIX/lib/pkgconfig:\
 $OGG_PREFIX/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+INSTALL_PREFIX="$BASE_DIR/$INSTALL_PREFIX="$BASE_DIR/$OUTPUT_DIR""
 
 FFMPEG_CONFIGURE_FLAGS+=(
+  "--prefix=$INSTALL_PREFIX"
+  "--libdir=$INSTALL_PREFIX/lib"
   "--extra-cflags=-I$LAME_PREFIX/include -I$MPG123_PREFIX/include -I$OPUS_PREFIX/include -I$VORBIS_PREFIX/include -I$OGG_PREFIX/include -I/opt/homebrew/include -target $TARGET"
   "--extra-ldflags=-L$LAME_PREFIX/lib -L$MPG123_PREFIX/lib -L$OPUS_PREFIX/lib -L$VORBIS_PREFIX/lib -L$OGG_PREFIX/lib -L/opt/homebrew/lib -target $TARGET"
   --extra-libs=-lmpg123

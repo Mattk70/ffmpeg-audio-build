@@ -195,7 +195,7 @@ jobs:
           cd "$VORBIS_SRC"
                     
           ./autogen.sh
-
+          # Remove a legacy linker flag that Xcode 26's ld rejects.
           perl -pi -e 's/-force_cpusubtype_ALL//g' configure.ac configure
 
           ./configure \
