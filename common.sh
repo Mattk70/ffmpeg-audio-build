@@ -54,6 +54,7 @@ FFMPEG_CONFIGURE_FLAGS=(
 --enable-filter=null
 --enable-filter=setpts
 --enable-filter=trim
+--enable-filter=pan
 --disable-protocols
 --enable-protocol=file
 --enable-protocol=pipe
