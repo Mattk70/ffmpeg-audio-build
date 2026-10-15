@@ -196,6 +196,8 @@ jobs:
                     
           ./autogen.sh
 
+          perl -pi -e 's/-force_cpusubtype_ALL//g' configure.ac configure
+
           ./configure \
             --prefix="$VORBIS_PREFIX" \
             --disable-shared \
