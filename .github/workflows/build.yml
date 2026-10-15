@@ -130,7 +130,7 @@ jobs:
           find /opt/homebrew -type f -name "*vorbis*.dylib" -exec rm -f {} +
           find /opt/homebrew -type f -name "*libogg*.dylib" -exec rm -f {} +
       - name: Install build tools
-        run: brew install autoconf automake libtool pkgconf yasm
+        run: brew install autoconf automake libtool
       - name: Build static LAME 4.0 for the target
         shell: bash
 
@@ -154,6 +154,7 @@ jobs:
           export CC=/usr/bin/clang
           export CFLAGS="-O2 -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
           export LDFLAGS="-mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
+          export PKG_CONFIG_PATH="$LAME_PREFIX/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
 
           ./configure \
             --prefix="$LAME_PREFIX" \
@@ -181,7 +182,7 @@ jobs:
 
           pkg-config --modversion lame
           pkg-config --cflags --libs lame
-          
+
       - name: Build
         run: ./build-macos.sh
         
