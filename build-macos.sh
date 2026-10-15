@@ -35,6 +35,13 @@ trap 'rm -rf $BUILD_DIR' EXIT
 cd $BUILD_DIR
 tar --strip-components=1 -xf $BASE_DIR/$FFMPEG_TARBALL
 
+LAME_PREFIX=/opt/homebrew/Cellar/lame/4.0
+echo "contents of /opt/homebrew/Cellar/lame/4.0"
+ls -l /opt/homebrew/Cellar/lame/4.0
+printf 'TARGET=%s\nARCH=%s\n' "$TARGET" "$ARCH"
+/usr/bin/clang -target "$TARGET" -print-target-triple
+grep -n -A20 -B10 -i 'mp3lame' ffbuild/config.log
+
 FFMPEG_CONFIGURE_FLAGS+=(
     --cc=/usr/bin/clang
     --prefix=$BASE_DIR/$OUTPUT_DIR
@@ -45,9 +52,7 @@ FFMPEG_CONFIGURE_FLAGS+=(
     --extra-cflags="-static -static-libgcc -static-libstdc++ -I/opt/homebrew/include -target $TARGET"
 )
 
-LAME_PREFIX=/opt/homebrew/Cellar/lame/4.0
-echo "LIPO coming"
-lipo -info "$LAME_PREFIX/lib/libmp3lame.a"
+
 
 FFMPEG_CONFIGURE_FLAGS+=(
   --extra-cflags="-I$LAME_PREFIX/include -target $TARGET"
