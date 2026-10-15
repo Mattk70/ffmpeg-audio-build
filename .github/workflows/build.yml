@@ -70,6 +70,7 @@ jobs:
             mingw-w64-ucrt-x86_64-opus
             mingw-w64-ucrt-x86_64-nasm
             binutils
+            mingw-w64-ucrt-x86_64-binutils
 
       - name: Verify lib locations
         run: |
