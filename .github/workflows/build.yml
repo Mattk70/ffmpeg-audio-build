@@ -110,7 +110,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
-        run: brew install yasm opus libvorbis libogg 
+        run: brew install yasm opus libvorbis libogg libmpg123
       
       # - name: Install libmp3lame
       #   run: |
