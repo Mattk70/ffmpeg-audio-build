@@ -110,7 +110,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
-        run: brew install yasm opus libvorbis libogg mpg123
+        run: brew install yasm opus libvorbis libogg
       
       # - name: Install libmp3lame
       #   run: |
@@ -131,12 +131,44 @@ jobs:
           find /opt/homebrew -type f -name "*libogg*.dylib" -exec rm -f {} +
       - name: Install build tools
         run: brew install autoconf automake libtool
+      
+      - name: Build static mpg123
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          MPG123_PREFIX="$RUNNER_TEMP/mpg123-install"
+          MPG123_SRC="$RUNNER_TEMP/mpg123-src"
+
+          git clone https://github.com/libsdl-org/mpg123.git "$MPG123_SRC"
+          # For reproducible builds, check out a reviewed release tag or commit here.
+          cd "$MPG123_SRC"
+
+          export MACOSX_DEPLOYMENT_TARGET=15.0
+          export CC=/usr/bin/clang
+          export CFLAGS="-O2 -target $TARGET -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
+          export LDFLAGS="-target $TARGET -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
+
+          ./configure \
+            --prefix="$MPG123_PREFIX" \
+            --disable-shared \
+            --enable-static \
+            --disable-components \
+            --enable-libmpg123
+
+          make -j"$(sysctl -n hw.ncpu)"
+          make install
+
+          test -f "$MPG123_PREFIX/lib/libmpg123.a"
+          lipo -info "$MPG123_PREFIX/lib/libmpg123.a"
+
+          echo "MPG123_PREFIX=$MPG123_PREFIX" >> "$GITHUB_ENV"
       - name: Build static LAME 4.0 for the target
         shell: bash
 
         run: |
           set -euo pipefail
-
+          export PKG_CONFIG_PATH="$MPG123_PREFIX/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
           LAME_PREFIX="$RUNNER_TEMP/lame-install"
           LAME_SRC="$RUNNER_TEMP/lame-src"
           LAME_ARCHIVE="$RUNNER_TEMP/lame-4.0.tar.gz"
