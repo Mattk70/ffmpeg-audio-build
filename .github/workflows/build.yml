@@ -110,28 +110,107 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
-        run: brew install yasm opus libvorbis libogg
+        run: brew install yasm
       
-      # - name: Install libmp3lame
-      #   run: |
-      #     # Ensure Homebrew packages are ARM64 compatible
-      #     export MACOSX_DEPLOYMENT_TARGET=14.0
-      #     brew install lame --build-from-source
-      #     otool -l "$(brew --prefix lame)/bin/lame" | grep -A 5 LC_BUILD_VERSION
-      #     # curl -fsSL -o lame.tar.gz "https://downloads.sourceforge.net/project/lame/4.0/lame-4.0.tar.gz" 
-      #     # tar xzf lame.tar.gz 
-      #     # cd lame-4.0
-      #     # ./configure --prefix=/opt/homebrew/opt/lame --enable-static --disable-shared 
-      #     # make -j$(sysctl -n hw.ncpu) 
-      #     # sudo make install
-      - name: Remove vorbis, ogg, opus  .dylib files # or it just dynamically links!
+      - name: Build static libogg
+        shell: bash
         run: |
-          find /opt/homebrew -type f -name "*opus*.dylib" -exec rm -f {} +
-          find /opt/homebrew -type f -name "*vorbis*.dylib" -exec rm -f {} +
+          set -euo pipefail
+
+          OGG_PREFIX="$RUNNER_TEMP/ogg-install"
+          OGG_SRC="$RUNNER_TEMP/ogg-src"
+
+          git clone https://github.com/xiph/ogg.git "$OGG_SRC"
+          cd "$OGG_SRC"
+
+          export MACOSX_DEPLOYMENT_TARGET=15.0
+          export CC=/usr/bin/clang
+          export CFLAGS="-O2 -target $TARGET -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
+          export LDFLAGS="-target $TARGET -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
+
+          ./configure \
+            --prefix="$OGG_PREFIX" \
+            --disable-shared \
+            --enable-static
+
+          make -j"$(sysctl -n hw.ncpu)"
+          make install
+
+          test -f "$OGG_PREFIX/lib/libogg.a"
+          lipo -info "$OGG_PREFIX/lib/libogg.a"
+
+          echo "OGG_PREFIX=$OGG_PREFIX" >> "$GITHUB_ENV"
+
+      - name: Remove ogg .dylib files # or it just dynamically links!
+        run: |
           find /opt/homebrew -type f -name "*libogg*.dylib" -exec rm -f {} +
       - name: Install build tools
         run: brew install autoconf automake libtool
-      
+
+      - name: Build static Opus
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          OPUS_PREFIX="$RUNNER_TEMP/opus-install"
+          OPUS_SRC="$RUNNER_TEMP/opus-src"
+
+          git clone https://github.com/xiph/opus.git "$OPUS_SRC"
+          cd "$OPUS_SRC"
+
+          export MACOSX_DEPLOYMENT_TARGET=15.0
+          export CC=/usr/bin/clang
+          export CFLAGS="-O2 -target $TARGET -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
+          export LDFLAGS="-target $TARGET -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
+
+          ./configure \
+            --prefix="$OPUS_PREFIX" \
+            --disable-shared \
+            --enable-static
+
+          make -j"$(sysctl -n hw.ncpu)"
+          make install
+
+          test -f "$OPUS_PREFIX/lib/libopus.a"
+          lipo -info "$OPUS_PREFIX/lib/libopus.a"
+
+          echo "OPUS_PREFIX=$OPUS_PREFIX" >> "$GITHUB_ENV"
+
+      - name: Build static libvorbis
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          VORBIS_PREFIX="$RUNNER_TEMP/vorbis-install"
+          VORBIS_SRC="$RUNNER_TEMP/vorbis-src"
+
+          # OGG_PREFIX must point to a target-compatible libogg.a install.
+          : "${OGG_PREFIX:?Set OGG_PREFIX to the static libogg install prefix}"
+
+          export PKG_CONFIG_PATH="$OGG_PREFIX/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+          export MACOSX_DEPLOYMENT_TARGET=15.0
+          export CC=/usr/bin/clang
+          export CFLAGS="-O2 -target $TARGET -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
+          export LDFLAGS="-L$OGG_PREFIX/lib -target $TARGET -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
+
+          git clone https://github.com/xiph/vorbis.git "$VORBIS_SRC"
+          cd "$VORBIS_SRC"
+
+          ./configure \
+            --prefix="$VORBIS_PREFIX" \
+            --disable-shared \
+            --enable-static \
+            --with-ogg="$OGG_PREFIX"
+
+          make -j"$(sysctl -n hw.ncpu)"
+          make install
+
+          test -f "$VORBIS_PREFIX/lib/libvorbis.a"
+          test -f "$VORBIS_PREFIX/lib/libvorbisenc.a"
+          test -f "$VORBIS_PREFIX/lib/libvorbisfile.a"
+          lipo -info "$VORBIS_PREFIX/lib/libvorbis.a"
+
+          echo "VORBIS_PREFIX=$VORBIS_PREFIX" >> "$GITHUB_ENV"
       - name: Build static mpg123
         shell: bash
         run: |

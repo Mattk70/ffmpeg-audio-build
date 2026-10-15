@@ -37,12 +37,17 @@ tar --strip-components=1 -xf $BASE_DIR/$FFMPEG_TARBALL
 
 LAME_PREFIX="$RUNNER_TEMP/lame-install"
 
-ls -l $LAME_PREFIX/lib
-export PKG_CONFIG_PATH="$LAME_PREFIX/lib/pkgconfig:$MPG123_PREFIX/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+
+export PKG_CONFIG_PATH="\
+$LAME_PREFIX/lib/pkgconfig:\
+$MPG123_PREFIX/lib/pkgconfig:\
+$OPUS_PREFIX/lib/pkgconfig:\
+$VORBIS_PREFIX/lib/pkgconfig:\
+$OGG_PREFIX/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
 
 FFMPEG_CONFIGURE_FLAGS+=(
-  --extra-ldflags="-L/opt/homebrew/lib -L$LAME_PREFIX/lib -L$MPG123_PREFIX/lib -target $TARGET"
-  --extra-cflags="-I$LAME_PREFIX/include -I$MPG123_PREFIX/include -I/opt/homebrew/include -target $TARGET"
+  "--extra-cflags=-I$LAME_PREFIX/include -I$MPG123_PREFIX/include -I$OPUS_PREFIX/include -I$VORBIS_PREFIX/include -I$OGG_PREFIX/include -I/opt/homebrew/include -target $TARGET"
+  "--extra-ldflags=-L$LAME_PREFIX/lib -L$MPG123_PREFIX/lib -L$OPUS_PREFIX/lib -L$VORBIS_PREFIX/lib -L$OGG_PREFIX/lib -L/opt/homebrew/lib -target $TARGET"
   --extra-libs=-lmpg123
 )
 
