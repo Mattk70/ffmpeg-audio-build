@@ -168,6 +168,20 @@ jobs:
           lipo -info "$LAME_PREFIX/lib/libmp3lame.a"
 
           echo "LAME_PREFIX=$LAME_PREFIX" >> "$GITHUB_ENV"
+
+      - name: Check LAME install
+        shell: bash
+        run: |
+          set -euxo pipefail
+
+          LAME_PREFIX="$RUNNER_TEMP/lame-install"
+          ls -l "$LAME_PREFIX/include/lame"
+          ls -l "$LAME_PREFIX/lib/libmp3lame.a"
+          cat "$LAME_PREFIX/lib/pkgconfig/lame.pc"
+
+          pkg-config --modversion lame
+          pkg-config --cflags --libs lame
+          
       - name: Build
         run: ./build-macos.sh
         
