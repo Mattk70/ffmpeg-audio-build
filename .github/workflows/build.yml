@@ -160,6 +160,7 @@ jobs:
           export CFLAGS="-O2 -target $TARGET -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
           export LDFLAGS="-target $TARGET -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
 
+          ./autogen.sh
           ./configure \
             --prefix="$OPUS_PREFIX" \
             --disable-shared \
@@ -192,6 +193,8 @@ jobs:
 
           git clone https://github.com/xiph/vorbis.git "$VORBIS_SRC"
           cd "$VORBIS_SRC"
+                    
+          ./autogen.sh
 
           ./configure \
             --prefix="$VORBIS_PREFIX" \
