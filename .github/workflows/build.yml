@@ -69,7 +69,7 @@ jobs:
             mingw-w64-ucrt-x86_64-libogg
             mingw-w64-ucrt-x86_64-opus
             mingw-w64-ucrt-x86_64-nasm
-            mingw-w64-ucrt-x86_64-binutils
+            binutils
 
       - name: Verify lib locations
         run: |
@@ -84,7 +84,7 @@ jobs:
 
       - name: Build
         run: |
-          export PATH="/c/ucrt64/bin:/c/ucrt64/x86_64-w64-mingw32/bin:$PATH"
+          export PATH="/ucrt64/x86_64-w64-mingw32/bin:$PATH"
           ./build-windows.sh
         shell: msys2 {0}
       - name: Archive production artifacts

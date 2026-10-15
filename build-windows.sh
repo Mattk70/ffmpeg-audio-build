@@ -4,7 +4,7 @@
 export PATH="/c/ucrt64/bin:$PATH"
 
 # required commands
-required="cmp make gcc pkg-config nasm"
+required="cmp make gcc pkg-config nasm ar"
 for cmd in $required; do
   if ! command -v "$cmd" >/dev/null 2>&1; then
     echo "ERROR: required command '$cmd' not found in PATH." >&2
