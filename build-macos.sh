@@ -41,13 +41,9 @@ ls -l $LAME_PREFIX/lib
 export PKG_CONFIG_PATH="$LAME_PREFIX/lib/pkgconfig:$MPG123_PREFIX/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
 
 FFMPEG_CONFIGURE_FLAGS+=(
-    --cc=/usr/bin/clang
-    --prefix=$BASE_DIR/$OUTPUT_DIR
-    --enable-cross-compile
-    --target-os=darwin
-    --arch=$ARCH
-    --extra-ldflags="-L/opt/homebrew/lib -L$LAME_PREFIX/lib -L$MPG123_PREFIX/lib  -target $TARGET"
-    --extra-cflags="-I$LAME_PREFIX/include -I$MPG123_PREFIX/include -I/opt/homebrew/include -target $TARGET"
+  --extra-ldflags="-L/opt/homebrew/lib -L$LAME_PREFIX/lib -L$MPG123_PREFIX/lib -target $TARGET"
+  --extra-cflags="-I$LAME_PREFIX/include -I$MPG123_PREFIX/include -I/opt/homebrew/include -target $TARGET"
+  --extra-libs=-lmpg123
 )
 
 cat > "$BUILD_DIR/lame-probe.c" <<'EOF'
