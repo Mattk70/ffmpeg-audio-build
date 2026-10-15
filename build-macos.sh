@@ -50,7 +50,19 @@ FFMPEG_CONFIGURE_FLAGS+=(
     --extra-cflags="-static -static-libgcc -static-libstdc++ -I/opt/homebrew/include -target $TARGET -I$LAME_PREFIX/include -target $TARGET"
 )
 
+cat > "$BUILD_DIR/lame-probe.c" <<'EOF'
+#include <lame/lame.h>
+int main(void) {
+    lame_t lame = lame_init();
+    return lame == 0;
+}
+EOF
 
+/usr/bin/clang -target "$TARGET" \
+  -I"$LAME_PREFIX/include" \
+  "$BUILD_DIR/lame-probe.c" \
+  "$LAME_PREFIX/lib/libmp3lame.a" \
+  -o "$BUILD_DIR/lame-probe"
 
 
 ./configure "${FFMPEG_CONFIGURE_FLAGS[@]}" || (cat ffbuild/config.log && exit 1)
