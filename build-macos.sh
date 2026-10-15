@@ -44,7 +44,14 @@ FFMPEG_CONFIGURE_FLAGS+=(
     --extra-ldflags="-L/opt/homebrew/lib -target $TARGET"
     --extra-cflags="-static -static-libgcc -static-libstdc++ -I/opt/homebrew/include -target $TARGET"
 )
- 
+
+LAME_PREFIX=/opt/homebrew/Cellar/lame/4.0
+
+FFMPEG_CONFIGURE_FLAGS+=(
+  --extra-cflags="-I$LAME_PREFIX/include -target $TARGET"
+  --extra-ldflags="-L$LAME_PREFIX/lib -target $TARGET"
+)
+
 ./configure "${FFMPEG_CONFIGURE_FLAGS[@]}" || (cat ffbuild/config.log && exit 1)
 
 perl -pi -e 's{HAVE_MACH_MACH_TIME_H 1}{HAVE_MACH_MACH_TIME_H 0}' config.h
