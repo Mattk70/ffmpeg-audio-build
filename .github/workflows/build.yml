@@ -150,14 +150,16 @@ jobs:
           tar -xzf "$LAME_ARCHIVE" -C "$LAME_SRC" --strip-components=1
           cd "$LAME_SRC"
 
+          export MACOSX_DEPLOYMENT_TARGET=15.0
+          export CC=/usr/bin/clang
+          export CFLAGS="-O2 -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
+          export LDFLAGS="-mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
+
           ./configure \
             --prefix="$LAME_PREFIX" \
             --disable-shared \
             --enable-static \
-            --disable-frontend \
-            CC=/usr/bin/clang \
-            CFLAGS="-O2 -target $TARGET -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET" \
-            LDFLAGS="-target $TARGET -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
+            --disable-frontend
 
           make -j"$(sysctl -n hw.ncpu)"
           make install
