@@ -36,28 +36,35 @@ cd $BUILD_DIR
 tar --strip-components=1 -xf $BASE_DIR/$FFMPEG_TARBALL
 
 LAME_PREFIX=/opt/homebrew/Cellar/lame/4.0
-echo "contents of /opt/homebrew/Cellar/lame/4.0"
-ls -l /opt/homebrew/Cellar/lame/4.0
+
 printf 'TARGET=%s\nARCH=%s\n' "$TARGET" "$ARCH"
 /usr/bin/clang -target "$TARGET" -print-target-triple
-grep -n -A20 -B10 -i 'mp3lame' ffbuild/config.log
 
+cat > /tmp/lame-probe.c <<'EOF'
+#include <lame/lame.h>
+int main(void) {
+    lame_t lame = lame_init();
+    return lame == 0;
+}
+EOF
+
+/usr/bin/clang -target "$TARGET" \
+  -I"$LAME_PREFIX/include" \
+  /tmp/lame-probe.c "$LAME_PREFIX/lib/libmp3lame.a" \
+  -o /tmp/lame-probe
+
+  
 FFMPEG_CONFIGURE_FLAGS+=(
     --cc=/usr/bin/clang
     --prefix=$BASE_DIR/$OUTPUT_DIR
     --enable-cross-compile
     --target-os=darwin
     --arch=$ARCH
-    --extra-ldflags="-L/opt/homebrew/lib -target $TARGET"
-    --extra-cflags="-static -static-libgcc -static-libstdc++ -I/opt/homebrew/include -target $TARGET"
+    --extra-ldflags="-L/opt/homebrew/lib -target $TARGET -L$LAME_PREFIX/lib -target $TARGET"
+    --extra-cflags="-static -static-libgcc -static-libstdc++ -I/opt/homebrew/include -target $TARGET -I$LAME_PREFIX/include -target $TARGET"
 )
 
 
-
-FFMPEG_CONFIGURE_FLAGS+=(
-  --extra-cflags="-I$LAME_PREFIX/include -target $TARGET"
-  --extra-ldflags="-L$LAME_PREFIX/lib -target $TARGET"
-)
 mv "$LAME_PREFIX/lib/libmp3lame.dylib" "$LAME_PREFIX/lib/libmp3lame.dylib.disabled"
 mv "$LAME_PREFIX/lib/libmp3lame.0.dylib" "$LAME_PREFIX/lib/libmp3lame.0.dylib.disabled"
 # Run FFmpeg configure and make here.
