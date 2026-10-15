@@ -202,6 +202,9 @@ jobs:
             --enable-static \
             --with-ogg="$OGG_PREFIX"
 
+          # Remove a legacy linker flag that Xcode 26's ld rejects.
+          perl -pi -e 's/\s*-force_cpusubtype_ALL\b//g' libtool
+          
           make -j"$(sysctl -n hw.ncpu)"
           make install
 
