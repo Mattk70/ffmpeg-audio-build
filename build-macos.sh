@@ -59,11 +59,13 @@ int main(void) {
 EOF
 
 /usr/bin/clang -target "$TARGET" \
+  -mmacosx-version-min="$MACOSX_DEPLOYMENT_TARGET" \
   -I"$LAME_PREFIX/include" \
+  -I"$MPG123_PREFIX/include" \
   "$BUILD_DIR/lame-probe.c" \
   "$LAME_PREFIX/lib/libmp3lame.a" \
+  "$MPG123_PREFIX/lib/libmpg123.a" \
   -o "$BUILD_DIR/lame-probe"
-
 
 ./configure "${FFMPEG_CONFIGURE_FLAGS[@]}" || (cat ffbuild/config.log && exit 1)
 
