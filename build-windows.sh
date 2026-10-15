@@ -52,6 +52,7 @@ echo ${PATH}
 
 FFMPEG_CONFIGURE_FLAGS+=(
     --nm=/ucrt64/bin/nm.exe
+    --ar=/ucrt64/x86_64-w64-mingw32/bin/ar.exe
     --prefix=$BASE_DIR/$OUTPUT_DIR
     --extra-cflags='-static -static-libgcc -static-libstdc++ -I/c/ucrt64/include'
     --extra-ldflags='-L/ucrt64/lib'
