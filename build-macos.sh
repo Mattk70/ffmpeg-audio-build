@@ -46,11 +46,16 @@ FFMPEG_CONFIGURE_FLAGS+=(
 )
 
 LAME_PREFIX=/opt/homebrew/Cellar/lame/4.0
+echo "LIPO coming"
+lipo -info "$LAME_PREFIX/lib/libmp3lame.a"
 
 FFMPEG_CONFIGURE_FLAGS+=(
   --extra-cflags="-I$LAME_PREFIX/include -target $TARGET"
   --extra-ldflags="-L$LAME_PREFIX/lib -target $TARGET"
 )
+mv "$LAME_PREFIX/lib/libmp3lame.dylib" "$LAME_PREFIX/lib/libmp3lame.dylib.disabled"
+mv "$LAME_PREFIX/lib/libmp3lame.0.dylib" "$LAME_PREFIX/lib/libmp3lame.0.dylib.disabled"
+# Run FFmpeg configure and make here.
 
 ./configure "${FFMPEG_CONFIGURE_FLAGS[@]}" || (cat ffbuild/config.log && exit 1)
 
@@ -58,7 +63,8 @@ perl -pi -e 's{HAVE_MACH_MACH_TIME_H 1}{HAVE_MACH_MACH_TIME_H 0}' config.h
 
 make V=8
 make install
-
+mv "$LAME_PREFIX/lib/libmp3lame.0.dylib.disabled" "$LAME_PREFIX/lib/libmp3lame.0.dylib"
+mv "$LAME_PREFIX/lib/libmp3lame.dylib.disabled" "$LAME_PREFIX/lib/libmp3lame.dylib"
 exe="$BASE_DIR/$OUTPUT_DIR/bin/ffmpeg"
 test -f "$exe" || { echo "Missing $exe" >&2; exit 1; }
 otool -L "$exe"
