@@ -112,6 +112,9 @@ jobs:
       - name: Install dependencies
         run: brew install yasm
       
+      - name: Install build tools
+        run: brew install autoconf automake libtool
+
       - name: Build static libogg
         shell: bash
         run: |
@@ -128,6 +131,7 @@ jobs:
           export CFLAGS="-O2 -target $TARGET -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
           export LDFLAGS="-target $TARGET -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
 
+          ./autogen.sh
           ./configure \
             --prefix="$OGG_PREFIX" \
             --disable-shared \
@@ -140,13 +144,6 @@ jobs:
           lipo -info "$OGG_PREFIX/lib/libogg.a"
 
           echo "OGG_PREFIX=$OGG_PREFIX" >> "$GITHUB_ENV"
-
-      - name: Remove ogg .dylib files # or it just dynamically links!
-        run: |
-          find /opt/homebrew -type f -name "*libogg*.dylib" -exec rm -f {} +
-      - name: Install build tools
-        run: brew install autoconf automake libtool
-
       - name: Build static Opus
         shell: bash
         run: |
