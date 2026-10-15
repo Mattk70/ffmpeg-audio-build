@@ -86,7 +86,6 @@ jobs:
       - name: Build
         run: |
           export PATH="/ucrt64/x86_64-w64-mingw32/bin:$PATH"
-          ln -sf /ucrt64/x86_64-w64-mingw32/bin/ar.exe /usr/bin/x86_64-w64-mingw32-ar
           ./build-windows.sh
         shell: msys2 {0}
       - name: Archive production artifacts
