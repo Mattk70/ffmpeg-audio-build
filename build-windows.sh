@@ -51,12 +51,15 @@ echo ${PATH}
 
 
 FFMPEG_CONFIGURE_FLAGS+=(
+    --enable-static
+    --disable-shared
     --nm=/ucrt64/bin/nm.exe
     --ar=/ucrt64/x86_64-w64-mingw32/bin/ar.exe
     --strip=/ucrt64/x86_64-w64-mingw32/bin/strip.exe
     --prefix=$BASE_DIR/$OUTPUT_DIR
-    --extra-cflags='-static -static-libgcc -static-libstdc++ -I/c/ucrt64/include'
-    --extra-ldflags='-L/ucrt64/lib'
+    --extra-cflags='-I/ucrt64/include'
+    # --extra-cflags='-static -static-libgcc -static-libstdc++ -I/c/ucrt64/include'
+    --extra-ldflags='-static -static-libgcc -static-libstdc++ -L/ucrt64/lib'
     --pkg-config-flags="--static"
     --target-os=mingw32
     --arch=$ARCH
@@ -68,4 +71,9 @@ echo "${FFMPEG_CONFIGURE_FLAGS[@]}"
 
 make -j$(nproc)
 make install
+
+exe="$BASE_DIR/$OUTPUT_DIR/bin/ffmpeg.exe"
+test -f "$exe" || { echo "Missing $exe" >&2; exit 1; }
+ldd "$exe"
+
 chown $(stat -c '%u:%g' $BASE_DIR) -R $BASE_DIR/$OUTPUT_DIR
