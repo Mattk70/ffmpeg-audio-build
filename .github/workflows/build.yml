@@ -121,12 +121,13 @@ jobs:
       #     # ./configure --prefix=/opt/homebrew/opt/lame --enable-static --disable-shared 
       #     # make -j$(sysctl -n hw.ncpu) 
       #     # sudo make install
-      # - name: Remove vorbis, ogg, opus and lame .dylib files # or it just dynamically links!
-      #   run: |
-      #     find /opt/homebrew -type f -name "*lame*.dylib" -exec rm -f {} +
-      #     find /opt/homebrew -type f -name "*opus*.dylib" -exec rm -f {} +
-      #     find /opt/homebrew -type f -name "*vorbis*.dylib" -exec rm -f {} +
-      #     find /opt/homebrew -type f -name "*libogg*.dylib" -exec rm -f {} +
+      - name: Remove vorbis, ogg, opus and lame .dylib files # or it just dynamically links!
+        run: |
+          find /opt/homebrew -type f -name "*lame*.dylib" -exec ls -l {} +
+          # find /opt/homebrew -type f -name "*lame*.dylib" -exec rm -f {} +
+          find /opt/homebrew -type f -name "*opus*.dylib" -exec rm -f {} +
+          find /opt/homebrew -type f -name "*vorbis*.dylib" -exec rm -f {} +
+          find /opt/homebrew -type f -name "*libogg*.dylib" -exec rm -f {} +
       - name: Build
         run: ./build-macos.sh
         

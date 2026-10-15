@@ -54,5 +54,5 @@ make install
 
 exe="$BASE_DIR/$OUTPUT_DIR/bin/ffmpeg"
 test -f "$exe" || { echo "Missing $exe" >&2; exit 1; }
-otool -l "$exe"
+otool -L "$exe"
 chown -R $(stat -f '%u:%g' $BASE_DIR) $BASE_DIR/$OUTPUT_DIR
