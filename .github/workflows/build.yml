@@ -107,7 +107,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
-        run: brew install yasm opus libvorbis libogg lame
+        run: brew install yasm opus libvorbis libogg 
       
       # - name: Install libmp3lame
       #   run: |
@@ -123,11 +123,44 @@ jobs:
       #     # sudo make install
       - name: Remove vorbis, ogg, opus and lame .dylib files # or it just dynamically links!
         run: |
-          find /opt/homebrew -type f -name "*lame*.dylib" -exec ls -l {} +
-          # find /opt/homebrew -type f -name "*lame*.dylib" -exec rm -f {} +
           find /opt/homebrew -type f -name "*opus*.dylib" -exec rm -f {} +
           find /opt/homebrew -type f -name "*vorbis*.dylib" -exec rm -f {} +
           find /opt/homebrew -type f -name "*libogg*.dylib" -exec rm -f {} +
+
+      - name: Build static LAME 4.0 for the target
+        shell: bash
+
+        run: |
+          set -euo pipefail
+
+          LAME_PREFIX="$RUNNER_TEMP/lame-install"
+          LAME_SRC="$RUNNER_TEMP/lame-src"
+          LAME_ARCHIVE="$RUNNER_TEMP/lame-4.0.tar.gz"
+
+          curl --fail --location --retry 3 \
+            "https://downloads.sourceforge.net/project/lame/lame/4.0/lame-4.0.tar.gz" \
+            --output "$LAME_ARCHIVE"
+
+          mkdir -p "$LAME_SRC"
+          tar -xzf "$LAME_ARCHIVE" -C "$LAME_SRC" --strip-components=1
+          cd "$LAME_SRC"
+
+          ./configure \
+            --prefix="$LAME_PREFIX" \
+            --disable-shared \
+            --enable-static \
+            --disable-frontend \
+            CC=/usr/bin/clang \
+            CFLAGS="-O2 -target $TARGET -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET" \
+            LDFLAGS="-target $TARGET -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
+
+          make -j"$(sysctl -n hw.ncpu)"
+          make install
+
+          test -f "$LAME_PREFIX/lib/libmp3lame.a"
+          lipo -info "$LAME_PREFIX/lib/libmp3lame.a"
+
+          echo "LAME_PREFIX=$LAME_PREFIX" >> "$GITHUB_ENV"
       - name: Build
         run: ./build-macos.sh
         

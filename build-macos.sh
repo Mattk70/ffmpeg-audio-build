@@ -35,25 +35,8 @@ trap 'rm -rf $BUILD_DIR' EXIT
 cd $BUILD_DIR
 tar --strip-components=1 -xf $BASE_DIR/$FFMPEG_TARBALL
 
-LAME_PREFIX=/opt/homebrew/Cellar/lame/4.0
 
-printf 'TARGET=%s\nARCH=%s\n' "$TARGET" "$ARCH"
-/usr/bin/clang -target "$TARGET" -print-target-triple
 
-cat > /tmp/lame-probe.c <<'EOF'
-#include <lame/lame.h>
-int main(void) {
-    lame_t lame = lame_init();
-    return lame == 0;
-}
-EOF
-
-/usr/bin/clang -target "$TARGET" \
-  -I"$LAME_PREFIX/include" \
-  /tmp/lame-probe.c "$LAME_PREFIX/lib/libmp3lame.a" \
-  -o /tmp/lame-probe
-
-  
 FFMPEG_CONFIGURE_FLAGS+=(
     --cc=/usr/bin/clang
     --prefix=$BASE_DIR/$OUTPUT_DIR
