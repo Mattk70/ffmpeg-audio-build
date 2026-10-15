@@ -38,6 +38,7 @@ tar --strip-components=1 -xf $BASE_DIR/$FFMPEG_TARBALL
 LAME_PREFIX="$RUNNER_TEMP/lame-install"
 
 ls -l $LAME_PREFIX/lib
+export PKG_CONFIG_PATH="$LAME_PREFIX/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
 
 FFMPEG_CONFIGURE_FLAGS+=(
     --cc=/usr/bin/clang
