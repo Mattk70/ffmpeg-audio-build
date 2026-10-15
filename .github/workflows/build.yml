@@ -104,6 +104,7 @@ jobs:
           - arm64-apple-macos15
     env:
       TARGET: ${{ matrix.target }}
+      MACOSX_DEPLOYMENT_TARGET: "15.0"
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
@@ -136,6 +137,7 @@ jobs:
           LAME_PREFIX="$RUNNER_TEMP/lame-install"
           LAME_SRC="$RUNNER_TEMP/lame-src"
           LAME_ARCHIVE="$RUNNER_TEMP/lame-4.0.tar.gz"
+          MACOSX_DEPLOYMENT_TARGET=
 
           curl --fail --location --retry 3 \
             "https://downloads.sourceforge.net/project/lame/lame/4.0/lame-4.0.tar.gz" \
