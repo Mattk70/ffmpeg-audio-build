@@ -61,8 +61,8 @@ jobs:
           msystem: UCRT64
           install: >-
             mingw-w64-ucrt-x86_64-gcc
-            mingw-w64-ucrt-x86_64-diffutils
-            mingw-w64-ucrt-x86_64-make
+            diffutils
+            make
             mingw-w64-ucrt-x86_64-pkg-config
             mingw-w64-ucrt-x86_64-lame
             mingw-w64-ucrt-x86_64-libvorbis
@@ -100,7 +100,7 @@ jobs:
         # https://developer.apple.com/documentation/apple-silicon/building-a-universal-macos-binary#Update-the-Architecture-List-of-Custom-Makefiles
         target:
           # - x86_64-apple-macos10.9
-          - arm64-apple-macos14
+          - arm64-apple-macos15
     env:
       TARGET: ${{ matrix.target }}
     steps:
@@ -116,7 +116,7 @@ jobs:
           otool -l "$(brew --prefix lame)/bin/lame" | grep -A 5 LC_BUILD_VERSION
           # curl -fsSL -o lame.tar.gz "https://downloads.sourceforge.net/project/lame/4.0/lame-4.0.tar.gz" 
           # tar xzf lame.tar.gz 
-          # cd lame-3.110 
+          # cd lame-4.0
           # ./configure --prefix=/opt/homebrew/opt/lame --enable-static --disable-shared 
           # make -j$(sysctl -n hw.ncpu) 
           # sudo make install
