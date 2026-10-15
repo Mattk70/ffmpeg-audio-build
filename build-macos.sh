@@ -41,10 +41,8 @@ FFMPEG_CONFIGURE_FLAGS+=(
     --enable-cross-compile
     --target-os=darwin
     --arch=$ARCH
-    --pkg-config-flags="--static"
     --extra-ldflags="-L/opt/homebrew/lib -target $TARGET"
     --extra-cflags="-static -static-libgcc -static-libstdc++ -I/opt/homebrew/include -target $TARGET"
-    --enable-runtime-cpudetect
 )
  
 ./configure "${FFMPEG_CONFIGURE_FLAGS[@]}" || (cat ffbuild/config.log && exit 1)

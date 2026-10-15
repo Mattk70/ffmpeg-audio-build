@@ -7,6 +7,7 @@ FFMPEG_TARBALL_URL=http://ffmpeg.org/releases/$FFMPEG_TARBALL
 FFMPEG_CONFIGURE_FLAGS=(
 --disable-shared
 --enable-static
+--pkg-config-flags="--static"
 --enable-version3
 --enable-pic
 --disable-doc
