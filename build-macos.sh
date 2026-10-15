@@ -38,8 +38,11 @@ tar --strip-components=1 -xf $BASE_DIR/$FFMPEG_TARBALL
 LAME_PREFIX="$RUNNER_TEMP/lame-install"
 
 ls -l $LAME_PREFIX/lib
-export PKG_CONFIG_PATH="$LAME_PREFIX/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+export PKG_CONFIG_PATH="$LAME_PREFIX/lib/pkgconfig:$MPG123_PREFIX/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
 
+# Include both prefixes in the single existing extra-flags options:
+--extra-cflags="-I$LAME_PREFIX/include -I$MPG123_PREFIX/include -target $TARGET"
+--extra-ldflags="-L$LAME_PREFIX/lib -L$MPG123_PREFIX/lib -target $TARGET"
 FFMPEG_CONFIGURE_FLAGS+=(
     --cc=/usr/bin/clang
     --prefix=$BASE_DIR/$OUTPUT_DIR

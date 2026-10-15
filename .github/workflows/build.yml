@@ -185,7 +185,7 @@ jobs:
           export MACOSX_DEPLOYMENT_TARGET=15.0
           export CC=/usr/bin/clang
           export CFLAGS="-O2 -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
-          export LDFLAGS="-mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
+          export LDFLAGS="-L$MPG123_PREFIX/lib -target $TARGET -mmacosx-version-min=$MACOSX_DEPLOYMENT_TARGET"
           export PKG_CONFIG_PATH="$LAME_PREFIX/lib/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
           echo "PKG_CONFIG_PATH=$PKG_CONFIG_PATH" >> "$GITHUB_ENV"
           ./configure \
