@@ -35,7 +35,7 @@ trap 'rm -rf $BUILD_DIR' EXIT
 cd $BUILD_DIR
 tar --strip-components=1 -xf $BASE_DIR/$FFMPEG_TARBALL
 
-
+LAME_PREFIX="$RUNNER_TEMP/lame-install"
 
 FFMPEG_CONFIGURE_FLAGS+=(
     --cc=/usr/bin/clang
@@ -48,9 +48,7 @@ FFMPEG_CONFIGURE_FLAGS+=(
 )
 
 
-mv "$LAME_PREFIX/lib/libmp3lame.dylib" "$LAME_PREFIX/lib/libmp3lame.dylib.disabled"
-mv "$LAME_PREFIX/lib/libmp3lame.0.dylib" "$LAME_PREFIX/lib/libmp3lame.0.dylib.disabled"
-# Run FFmpeg configure and make here.
+
 
 ./configure "${FFMPEG_CONFIGURE_FLAGS[@]}" || (cat ffbuild/config.log && exit 1)
 
@@ -58,8 +56,7 @@ perl -pi -e 's{HAVE_MACH_MACH_TIME_H 1}{HAVE_MACH_MACH_TIME_H 0}' config.h
 
 make V=8
 make install
-mv "$LAME_PREFIX/lib/libmp3lame.0.dylib.disabled" "$LAME_PREFIX/lib/libmp3lame.0.dylib"
-mv "$LAME_PREFIX/lib/libmp3lame.dylib.disabled" "$LAME_PREFIX/lib/libmp3lame.dylib"
+
 exe="$BASE_DIR/$OUTPUT_DIR/bin/ffmpeg"
 test -f "$exe" || { echo "Missing $exe" >&2; exit 1; }
 otool -L "$exe"
