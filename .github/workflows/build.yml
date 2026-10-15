@@ -105,6 +105,8 @@ jobs:
     env:
       TARGET: ${{ matrix.target }}
       MACOSX_DEPLOYMENT_TARGET: "15.0"
+      ARCH: arm64
+      LAME_REF: master # Replace with a reviewed, fixed commit SHA.
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
@@ -127,7 +129,8 @@ jobs:
           find /opt/homebrew -type f -name "*opus*.dylib" -exec rm -f {} +
           find /opt/homebrew -type f -name "*vorbis*.dylib" -exec rm -f {} +
           find /opt/homebrew -type f -name "*libogg*.dylib" -exec rm -f {} +
-
+      - name: Install build tools
+        run: brew install autoconf automake libtool pkgconf yasm
       - name: Build static LAME 4.0 for the target
         shell: bash
 
