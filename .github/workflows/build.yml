@@ -43,60 +43,52 @@ jobs:
           path: artifacts/
 
   package-windows:
-    runs-on: windows-latest
-    strategy:
-      matrix:
-        arch:
-          - x86_64
-    env:
-      ARCH: ${{ matrix.arch }}
-    steps:
-      - uses: actions/checkout@v4
+      runs-on: windows-latest
+      strategy:
+        matrix:
+          arch:
+            - x86_64
+      env:
+        ARCH: ${{ matrix.arch }}
+      steps:
+        - uses: actions/checkout@v4
 
-      - name: Install MSYS2
-        uses: msys2/setup-msys2@v2
-        with:
-          update: true
-          msystem: UCRT64
-          install: >-
-            base-devel
-            diffutils
-            make
-            mingw-w64-ucrt-x86_64-gcc
-            mingw-w64-ucrt-x86_64-pkg-config
-            mingw-w64-ucrt-x86_64-mpg123
-            mingw-w64-ucrt-x86_64-lame
-            mingw-w64-ucrt-x86_64-libvorbis
-            mingw-w64-ucrt-x86_64-libogg
-            mingw-w64-ucrt-x86_64-opus
-            mingw-w64-ucrt-x86_64-nasm
-            mingw-w64-ucrt-x86_64-binutils
+        - name: Install MSYS2
+          uses: msys2/setup-msys2@v2
+          with:
+            update: true
+            msystem: UCRT64
+            install: >-
+              base-devel
+              diffutils
+              make
+              curl
+              tar
+              bzip2
+              mingw-w64-ucrt-x86_64-gcc
+              mingw-w64-ucrt-x86_64-pkg-config
+              mingw-w64-ucrt-x86_64-libvorbis
+              mingw-w64-ucrt-x86_64-libogg
+              mingw-w64-ucrt-x86_64-opus
+              mingw-w64-ucrt-x86_64-nasm
+              mingw-w64-ucrt-x86_64-binutils
 
-      - name: Verify lib locations
-        run: |
-          pacman -Ql mingw-w64-ucrt-x86_64-lame \
-            mingw-w64-ucrt-x86_64-mpg123 \
-            mingw-w64-ucrt-x86_64-libvorbis \
-            mingw-w64-ucrt-x86_64-libogg \
-            mingw-w64-ucrt-x86_64-opus \
-            mingw-w64-ucrt-x86_64-nasm
+        # Static lame + mpg123 are built from source by build-windows.sh into deps/
+        - name: Cache static dependencies
+          uses: actions/cache@v4
+          with:
+            path: deps/
+            key: windows-deps-${{ matrix.arch }}-${{ hashFiles('build-windows.sh') }}
 
-          echo ${PATH}
-        shell: msys2 {0}
+        - name: Build
+          run: ./build-windows.sh
+          shell: msys2 {0}
 
-      - name: Build
-        run: |
-          export PATH="/ucrt64/bin:/ucrt64/x86_64-w64-mingw32/bin:$PATH"
-          export PKG_CONFIG_PATH="/ucrt64/lib/pkgconfig:/ucrt64/share/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
-          pkg-config --modversion libmp3lame || true
-          pkg-config --libs --cflags libmp3lame || true
-          ./build-windows.sh
-        shell: msys2 {0}
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: ffmpeg-windows-${{ env.ARCH }}
-          path: artifacts/
+        - name: Archive production artifacts
+          uses: actions/upload-artifact@v4
+          with:
+            name: ffmpeg-windows-${{ env.ARCH }}
+            path: artifacts/
 
   package-macos:
     runs-on: macos-latest
