@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
+set -euxo pipefail
+
 
 # ensure mingw-ucrt bin is first so mingw tools are found
 export PATH="/ucrt64/bin:/ucrt64/x86_64-w64-mingw32/bin:$PATH"
-
+echo "==> PATH=$PATH"
+echo "==> checking required tools"
 # required commands
 required="cmp make gcc pkg-config nasm ar"
 for cmd in $required; do
