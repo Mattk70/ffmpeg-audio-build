@@ -76,6 +76,7 @@ jobs:
       - name: Verify lib locations
         run: |
           pacman -Ql mingw-w64-ucrt-x86_64-lame \
+            mingw-w64-ucrt-x86_64-mpg123 \
             mingw-w64-ucrt-x86_64-libvorbis \
             mingw-w64-ucrt-x86_64-libogg \
             mingw-w64-ucrt-x86_64-opus \
