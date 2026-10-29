@@ -64,7 +64,7 @@ jobs:
             make
             mingw-w64-ucrt-x86_64-gcc
             mingw-w64-ucrt-x86_64-pkg-config
-            mingw-w64-ucrt-x86_64-mpg123
+            mingw-w64-ucrt-x86_64-libmpg123
             mingw-w64-ucrt-x86_64-lame
             mingw-w64-ucrt-x86_64-libvorbis
             mingw-w64-ucrt-x86_64-libogg
@@ -86,7 +86,10 @@ jobs:
 
       - name: Build
         run: |
-          export PATH="/ucrt64/x86_64-w64-mingw32/bin:$PATH"
+          export PATH="/ucrt64/bin:/ucrt64/x86_64-w64-mingw32/bin:$PATH"
+          export PKG_CONFIG_PATH="/ucrt64/lib/pkgconfig:/ucrt64/share/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
+          pkg-config --modversion libmp3lame || true
+          pkg-config --libs --cflags libmp3lame || true
           ./build-windows.sh
         shell: msys2 {0}
       - name: Archive production artifacts
