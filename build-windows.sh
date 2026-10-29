@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # ensure mingw-ucrt bin is first so mingw tools are found
-export PATH="/c/ucrt64/bin:$PATH"
+export PATH="/ucrt64/bin:/ucrt64/x86_64-w64-mingw32/bin:$PATH"
 
 # required commands
 required="cmp make gcc pkg-config nasm ar"

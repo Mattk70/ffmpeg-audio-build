@@ -57,12 +57,12 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           update: true
-          cache: true
           msystem: UCRT64
           install: >-
-            mingw-w64-ucrt-x86_64-gcc
+            base-devel
             diffutils
             make
+            mingw-w64-ucrt-x86_64-gcc
             mingw-w64-ucrt-x86_64-pkg-config
             mingw-w64-ucrt-x86_64-mpg123
             mingw-w64-ucrt-x86_64-lame
@@ -70,7 +70,6 @@ jobs:
             mingw-w64-ucrt-x86_64-libogg
             mingw-w64-ucrt-x86_64-opus
             mingw-w64-ucrt-x86_64-nasm
-            binutils
             mingw-w64-ucrt-x86_64-binutils
 
       - name: Verify lib locations
