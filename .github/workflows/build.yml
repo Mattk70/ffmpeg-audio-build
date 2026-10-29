@@ -64,6 +64,7 @@ jobs:
             diffutils
             make
             mingw-w64-ucrt-x86_64-pkg-config
+            mingw-w64-ucrt-x86_64-mpg123
             mingw-w64-ucrt-x86_64-lame
             mingw-w64-ucrt-x86_64-libvorbis
             mingw-w64-ucrt-x86_64-libogg
