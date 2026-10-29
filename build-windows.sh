@@ -23,7 +23,7 @@ cd $(dirname $0)
 BASE_DIR=$(pwd)
 
 source common.sh
-
+echo "==> downloading FFmpeg tarball"
 if [ ! -e $FFMPEG_TARBALL ]
 then
 	curl -s -L -O $FFMPEG_TARBALL_URL
